@@ -1,0 +1,53 @@
+<form action="<?= $block->escapeUrl($block->getUrl('custommenu/tracking/index')) ?>" method="post" enctype="multipart/form-data" id="import-form">
+    <?= $block->getBlockHtml('formkey') ?>
+    <fieldset class="admin__fieldset admin__fieldset-import-service">
+        <!-- File Upload Field -->
+        <div class="fieldset admin__field">
+            <label for="import_file" class="admin__field-label"><span><?= $block->escapeHtml(__('Import CSV or Excel File')) ?></span></label>
+            <div class="admin__field-control">
+                <input type="file" id="import_file" name="tracking_file" class="input-file required-entry" />
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="fieldset admin__field">
+            <label for="submit_file" class="admin__field-label"><span><?= $block->escapeHtml(__('Upload File')) ?></span></label>
+            <div class="admin__field-control">
+                <button title="<?= $block->escapeHtmlAttr(__('Upload File')) ?>" type="button" class="action-default scalable import-submit" data-ui-id="widget-button-0">
+                    <span><?= $block->escapeHtml(__('Upload')) ?></span>
+                </button>
+            </div>
+        </div>
+    </fieldset>
+</form>
+
+<!-- Recommendations Section -->
+<div class="notes">
+    <h3><?= $block->escapeHtml(__('Recommendations')); ?></h3>
+    <fieldset class="admin__fieldset">
+        <div class="fieldset admin__field">
+            <label class="admin__field-label"><span><?= $block->escapeHtml(__('File Requirements')) ?></span></label>
+            <div class="admin__field-control">
+                <input class="admin__control-text" readonly="readonly" value="<?= $block->escapeHtmlAttr(__('Ensure the file contains "orderId" and "track_link" columns, and use UTF-8 encoding.')); ?>" />
+            </div>
+        </div>
+    </fieldset>
+</div>
+
+<script>
+    require(['jquery', "mage/mage", "loadingPopup"], function(jQuery) {
+        jQuery('#import-form').mage('form').mage('validation');
+        (function($) {
+            $('.import-submit').click(function() {
+                if ($(':input[name="tracking_file"]').val()) {
+                    $('body').loadingPopup({
+                        timeout: false
+                    });
+                    $('#import-form').submit();
+                } else {
+                    alert('Please select a file to upload.');
+                }
+            });
+        })(jQuery);
+    });
+</script>

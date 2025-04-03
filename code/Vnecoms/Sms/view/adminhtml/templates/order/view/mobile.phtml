@@ -1,0 +1,18 @@
+<?php $order = $block->getOrder();?>
+<?php $mobilenumber = '';?>
+<?php if($order->getShippingAddress()->getTelephone()){?>
+<?php $mobilenumber = $order->getShippingAddress()->getTelephone();?>
+<?php }elseif($order->getBillingAddress()->getTelephone()){?>
+<?php $mobilenumber = $order->getBillingAddress()->getTelephone();?>
+<?php }else{
+	  $mobilenumber = $block->getCustomerMobile();
+} 
+
+
+$mobilenumber = preg_replace('/(?<=\d)\s+(?=\d)/', '', $mobilenumber);
+
+?>	
+<tr>
+    <th><?php echo __('Customer Mobile')?></th>
+    <td><?php echo $mobilenumber." ";?><a href="https://wa.me/<?php echo $mobilenumber;?>" target="_blank">Whatsapp</a></td>
+</tr>

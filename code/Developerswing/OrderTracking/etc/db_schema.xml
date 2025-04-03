@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order">
+		<column xsi:type="smallint" name="pre_order" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="pre order"/>
+	</table>
+	<table name="sales_order_grid">
+		<column xsi:type="smallint" name="pre_order" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="pre order"/>
+	</table>
+	<table name="track_order_status_dates">
+		<column xsi:type="smallint" name="pre_order" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="pre order"/>
+		<column name="processing_status_date" nullable="true" xsi:type="varchar" comment="processing_status_date" length="255"/>
+		<column name="preorder_change_status_date" nullable="true" xsi:type="varchar" comment="preorder change status date" length="255"/>
+	</table>
+</schema>

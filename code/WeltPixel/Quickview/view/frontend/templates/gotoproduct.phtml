@@ -1,0 +1,10 @@
+<?php $buttonTitle = __('View More');?>
+<div class="box-gotoproduct box-tocart">
+    <div class="fieldset">
+        <div class="actions">
+            <a target="_parent" href="<?php /* @escapeNotVerified */ echo $this->getProduct()->getProductUrl() ?>" title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>" class="action gotoproduct tocart custom-btn btn btn-secondary" id="product-gotoproduct-button">
+                <span><?php /* @escapeNotVerified */ echo $buttonTitle ?></span>
+            </a>
+        </div>
+    </div>
+</div>

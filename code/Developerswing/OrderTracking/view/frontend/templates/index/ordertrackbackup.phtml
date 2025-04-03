@@ -1,0 +1,437 @@
+<?php 
+$orderInfo              = $block->getOrderSearch();
+$ispreOrder             = $block->isPreOrder($orderInfo->getId());
+if($ispreOrder->getPreOrder())
+{
+
+}
+$orderDate              = safe_strtotime($orderInfo->getCreatedAt());
+$warehouseDate          = safe_strtotime(date('Y-m-d h:i:s'));
+
+$orderDate              = safe_strtotime($orderInfo->getCreatedAt());
+
+if($ispreOrder->getPreOrder()&&$ispreOrder->getPreorderChangeStatusDate())
+{
+  $orderDate = safe_strtotime($ispreOrder->getPreorderChangeStatusDate());	
+}elseif ($orderInfo->getStatus()=='denied') {
+  $orderDate = safe_strtotime($ispreOrder->getProcessingStatusDate());
+}
+$warehouseDate          = safe_strtotime(date('Y-m-d h:i:s'));
+$dateDiff               = $warehouseDate - $orderDate;
+$totalDays              = floor($dateDiff/(60*60*24));
+
+$dateString = $ispreOrder->getProcessingStatusDate(); // Replace $someVariable with the actual variable being used
+if (!is_null($dateString) && $dateString !== '') {
+    $processingDate = safe_strtotime($dateString);
+} else {
+    // Handle the case when $dateString is null or empty
+    $processingDate = null; // or some default value or an error handling code
+}
+$dateProcessingDiff     = $warehouseDate - $processingDate;
+$totalProcessingDays    = floor($dateProcessingDiff/(60*60*24));
+
+
+$prepareOrderStatus     = false;
+$prepareOrderDate       = false;
+$warehouseOrderStatus   = false;
+$warehouseOrderDate     = false;
+$shippingOrderStatus    = false;
+$shippingOrderDate      = false;
+$customsOrderStatus     = false;
+$customsOrderDate       = false;
+$deliveredOrderStatus   = false;
+$deliveredOrderDate     = false;
+$courierOrderStatus     = false;
+$withCourierOrderDate   = false;
+if($totalDays <= 4)
+{
+  $prepareOrderStatus   = true;
+  $prepareOrderDate     = true;
+  if($warehouseDate){
+  	$warehouseOrderStatus = true;
+  }
+}
+if($totalDays > 3 && $block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate())
+{
+  $prepareOrderStatus   = true;	
+  $warehouseOrderStatus = true;	
+  $warehouseOrderDate   = $warehouseDate;
+}
+if($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate())
+{
+  $prepareOrderStatus   = true;	
+  $warehouseOrderStatus = true;	
+  $warehouseOrderDate   = $warehouseDate;
+}
+if($totalDays >= 5 && $totalProcessingDays >= 5)
+{
+  $shippingOrderStatus  = true;
+  $prepareOrderStatus   = true;	
+  if($warehouseDate){
+  	$warehouseOrderStatus = true;
+  }
+  $shippingOrderDate    = $block->getShipmentDate($orderInfo->getId());	
+}
+if($totalDays > 10 && $totalProcessingDays > 10)
+{
+  $customsOrderStatus   = true;
+  $shippingOrderStatus  = true;
+  $prepareOrderStatus   = true;	
+  $warehouseOrderStatus = true;
+  $customsOrderDate     = $orderInfo->getUpdatedAt();
+}
+if($orderInfo->getStatus()=='shipment')
+{
+  $customsOrderStatus   = true;
+  $shippingOrderStatus  = true;
+  $prepareOrderStatus   = true;	
+  $warehouseOrderStatus = true;
+  $courierOrderStatus   = true;
+  $customsOrderDate     = $orderInfo->getUpdatedAt();
+}
+if($orderInfo->getStatus()=='international_shipment')
+{
+  $prepareOrderStatus     = true;
+  $warehouseOrderStatus   = true;
+  $shippingOrderStatus    = true;		
+  $customsOrderStatus     = true;	
+  $deliveredOrderStatus   = true;
+  $courierOrderStatus     = true;
+  $deliveredOrderDate     = $orderInfo->getUpdatedAt();
+}
+$trackLink = $block->getTrackingNumberFrom($orderInfo); 
+
+?>
+
+
+<style>
+
+#progressbar li:before {
+    width: 13px!important;
+  
+}
+form.track-number-form button {
+    padding: 11px 50px!important;
+}
+
+</style>
+<section>
+	<div class="container-search-box">
+		<div class="prodict-itam-track">
+			<div>
+				<ol class="progtrckr" data-progtrckr-steps="6">
+				    <li <?php if($prepareOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';}?> ><?php echo __('Preparing Order')?></li>
+				 	<li <?php if($warehouseOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';} ?> ><?php echo __('In Warehouse')?></li>
+				 	<li <?php if($shippingOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';} ?> ><?php echo __('Shipping Order')?></li>
+				 	<li <?php if($customsOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';} ?> ><?php echo __('Costoms')?></li>
+				 	<li <?php if($courierOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';} ?> ><?php echo __('WithCourier')?></li>
+				 	<li <?php if($deliveredOrderStatus){ echo 'class="progtrckr-done"';}else{ echo 'class="progtrckr-todo"';} ?>><?php echo __('Delivered')?></li>
+				</ol>
+
+				<div class="progressContainer">
+				  <ul class="progress">
+				    <li class="progress__item  <?php if($prepareOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."preaparing-order.svg"?>">
+				        <p class="progress__title">Step 1</p>
+				        <p class="progress__info"><?php echo __('Preparing Order')?></p>
+				    </li>
+				    <li class="progress__item <?php if($warehouseOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."in-warehouse.svg"?>">
+				        <p class="progress__title">Step 2</p>
+				        <p class="progress__info"><?php echo __('In Warehouse')?></p>
+				    </li>
+				    <li class="progress__item <?php if($shippingOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."shipping-order.svg"?>">
+				        <p class="progress__title">Step 3</p>
+				        <p class="progress__info"><?php echo __('Shipping Order')?></p>
+				    </li>
+				    <li class="progress__item  <?php if($customsOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."Costoms.svg"?>">
+				        <p class="progress__title">Step 4</p>
+				        <p class="progress__info"><?php echo __('Costoms')?></p>
+				    </li>
+				    <li class="progress__item <?php if($courierOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."withcourrier.svg"?>">
+				        <p class="progress__title">Step 5</p>
+				        <p class="progress__info"><?php echo __('WithCourier')?></p>
+				    </li>
+				    <li class="progress__item <?php if($deliveredOrderStatus){ echo 'progress__item--active';} ?>">
+				    	<img src="<?php echo $block->getMediaUrl()."Delivered.svg"?>">
+				        <p class="progress__title">Step 6</p>
+				        <p class="progress__info"><?php echo __('Delivered')?></p>
+				    </li>
+				  </ul>
+				</div>
+			</div>
+            <?php if($prepareOrderStatus&&!$warehouseOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th><?php echo __('Status')?></th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<?php if($prepareOrderStatus&&$warehouseOrderStatus&&!$shippingOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th>Status</th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<?php if($ispreOrder->getPreorderChangeStatusDate()){?>
+							<td><?php echo date('d/m/Y', safe_strtotime($ispreOrder->getPreorderChangeStatusDate()));?></td>
+						    <?php }else{ ?>
+						    <td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>	
+                            <?php }?>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Confirmed')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Order Confirmed')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Packaging')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<?php if($prepareOrderStatus&&$warehouseOrderStatus&&$shippingOrderStatus&&!$customsOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th><?php echo __('Status')?></th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<?php if($ispreOrder->getPreorderChangeStatusDate()){?>
+							<td><?php echo date('d/m/Y', safe_strtotime($ispreOrder->getPreorderChangeStatusDate()));?></td>
+						    <?php }else{ ?>
+						    <td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>	
+                            <?php }?>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Confirmed')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Order Confirmed')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Packaging')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('On the way')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 5 day'));?></td>
+							<td><?php echo __('Your order is on the way to your country')?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<?php if($prepareOrderStatus&&$warehouseOrderStatus&&$shippingOrderStatus&&$customsOrderStatus&&!$courierOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th><?php echo __('Status')?></th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<?php if($ispreOrder->getPreorderChangeStatusDate()){?>
+							<td><?php echo date('d/m/Y', safe_strtotime($ispreOrder->getPreorderChangeStatusDate()));?></td>
+						    <?php }else{ ?>
+						    <td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>	
+                            <?php }?>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Confirmed')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Order Confirmed')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Packaging')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('On the way')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 5 day'));?></td>
+							<td><?php echo __('Your order is on the way to your country')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('In Customes')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 10 day'));?></td>
+							<td><?php echo __('Kpopiashop team are working to get your order ready')?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<?php if($prepareOrderStatus&&$warehouseOrderStatus&&$shippingOrderStatus&&$customsOrderStatus&&$courierOrderStatus&&!$deliveredOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th><?php echo __('Status')?></th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<?php if($ispreOrder->getPreorderChangeStatusDate()){?>
+							<td><?php echo date('d/m/Y', safe_strtotime($ispreOrder->getPreorderChangeStatusDate()));?></td>
+						    <?php }else{ ?>
+						    <td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>	
+                            <?php }?>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Confirmed')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Order Confirmed')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Packaging')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('On the way')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 5 day'));?></td>
+							<td><?php echo __('Your order is on the way to your country')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('In Customes')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 10 day'));?></td>
+							<td><?php echo __('Kpopiashop team are working to get your order ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('With Courier')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getWithCourierStatus()));?></td>
+							<td><?php echo __('Your order is on the way to your location you can track your order the direct link to courier company below')?>
+							<div class="track-link">
+				            <?php if($courierOrderStatus&&$trackLink){?>
+				            <a href="<?php echo $trackLink?>" target="_blank"><?php echo '"'.__('Order tracking link').'"';?></a>
+				            <?php }?>	
+				            </div>	
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<?php if($prepareOrderStatus&&$warehouseOrderStatus&&$shippingOrderStatus&&$customsOrderStatus&&$courierOrderStatus&&$deliveredOrderStatus){?>
+            <div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th><?php echo __('Status')?></th>
+							<th><?php echo __('Date')?></th>
+							<th><?php echo __('Notice')?></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><?php echo __('Order Created')?></td>
+							<?php if($ispreOrder->getPreorderChangeStatusDate()){?>
+							<td><?php echo date('d/m/Y', safe_strtotime($ispreOrder->getPreorderChangeStatusDate()));?></td>
+						    <?php }else{ ?>
+						    <td><?php echo date('d/m/Y', safe_strtotime($orderInfo->getCreatedAt()));?></td>	
+                            <?php }?>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Confirmed')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Order Confirmed')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('Order Packaging')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate()));?></td>
+							<td><?php echo __('Your order has been Created it wll be shipped once its ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('On the way')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 5 day'));?></td>
+							<td><?php echo __('Your order is on the way to your country')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('In Customes')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getProcessingStatusDate(). ' + 10 day'));?></td>
+							<td><?php echo __('Kpopiashop team are working to get your order ready')?></td>
+						</tr>
+						<tr>
+							<td><?php echo __('With Courier')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getWithCourierStatus()));?></td>
+							<td><?php echo __('Your order is on the way to your location you can track your order the direct link to courier company below')?>
+							<div class="track-link">
+				            <?php if($courierOrderStatus&&$trackLink){?>
+				            <a href="<?php echo $trackLink?>" target="_blank"><?php echo '"'.__('Order tracking link').'"';?></a>
+				            <?php }?>	
+				            </div>	
+							</td>
+						</tr>
+						<tr>   
+							<td><?php echo __('Delivered')?></td>
+							<td><?php echo date('d/m/Y', safe_strtotime($block->getOrderStatusDates($orderInfo->getId())->getDeliveredStatus()));?></td>
+							<td><?php echo __('Your order is Delivered')?></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>	
+			<?php }?>
+			<div class="track-mt-20 text-left">
+				<p><b><?php echo __('IMPORTANT NOTICE FOR ORDER TRACKING</b>-The tracking order link will be automatically created once your order is delivered to the courier')?></b></p>
+			</div>
+            
+		</div>
+	</div>
+</section>
+<?php
+function safe_strtotime($datetime) {
+    if (is_string($datetime) && !empty($datetime)) {
+        $timestamp = strtotime($datetime);
+        if ($timestamp !== false) {
+            return $timestamp;
+        }
+    }
+    return null; // or return false, or a default timestamp, as per your needs
+}
+?>
+

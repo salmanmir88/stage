@@ -1,0 +1,11 @@
+<!-- ko if: (cart().tax_amount_no_html) -->
+<div class="subtotal">
+    <span class="label">
+        <!-- ko i18n: 'Tax' --><!-- /ko -->
+    </span>
+
+    <!-- ko foreach: elems -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+<!-- /ko -->

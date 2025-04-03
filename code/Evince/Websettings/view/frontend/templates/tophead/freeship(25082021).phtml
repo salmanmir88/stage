@@ -1,0 +1,15 @@
+<?php
+$viewAllHelper = $this->helper('Evince\ViewAll\Helper\Data');
+$getFreeShippingText = $viewAllHelper->getConfigValues('freeShipment/tooltiptext/textmsg');
+?>
+<div class="main-free-ship" >
+    <div class="block-free-ship tooltip">
+        <span class="shippping-icon"></span><?php echo __('Free Shipping') ?>
+        <span class="tooltiptext"><?= $block->escapeHtml(__($getFreeShippingText)) ?></span>
+        <span class="track-icon"><a href="<?php echo $this->getUrl('ordertrack')?>"><?php echo __('Order tracking')?></a></span> 
+    </div>
+    <div class="contact-us-block">
+        <?php echo __('Call Us') ?><?php echo ' : &nbsp;' ?><a href="tel:<?php echo $this->getPhoneNumber(); ?>"><?php echo $this->getPhoneNumber(); ?></a>
+    </div>
+
+</div>

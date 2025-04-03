@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add
+				id="Olegnax_DeferJS::DeferJS"
+				title="Defer JS"
+				translate="title"
+				module="Olegnax_DeferJS"
+				sortOrder="700"
+				parent="Olegnax_Core::Olegnax_Core"
+				resource="Olegnax_DeferJS::DeferJS"/>
+		<add
+				id="Olegnax_DeferJS::config_olegnax_deferjs"
+				title="Configuration"
+				translate="title"
+				module="Olegnax_DeferJS"
+				sortOrder="20"
+				action="adminhtml/system_config/edit/section/ox_deferjs"
+				parent="Olegnax_DeferJS::DeferJS"
+				resource="Olegnax_DeferJS::DeferJS"/>
+	</menu>
+</config>

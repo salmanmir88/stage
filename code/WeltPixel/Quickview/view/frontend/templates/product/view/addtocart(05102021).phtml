@@ -1,0 +1,118 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php
+$buttonTitle = __('Add to Cart');
+$outOfStockTitle = __('Out of Stock');
+$goToProductTitle = __('Go To Product');?>
+<?php 
+$wishlistPost = json_decode($this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product),true);
+$wishListAction  =   $wishlistPost["action"];
+$productType = $_product->getTypeId(); 
+?>
+<div class="product-price">
+	<?php echo $this->getLayout()
+					->createBlock('Magento\Catalog\Pricing\Render',
+					"product.price.final",
+						[
+							'data' => [
+								'price_render' => 'product.price.render.default',
+								'price_type_code' => 'final_price',
+								'zone' => 'item_view'
+							]
+						]
+					)->toHtml();
+	?>
+</div>
+<?php if($productType != 'configurable' || 1){ ?>
+	<div class="prodcut-qty">
+		<span><?php /* @escapeNotVerified */ echo __('Quantity') ?></span>
+		<div class="i-d-button">
+			<div id="custom-qty" class="control" data-bind="scope: 'qty-counter'">
+				<!-- ko template: getTemplate() --><!-- /ko -->
+				<script type="text/x-magento-init">
+					{
+						"#custom-qty": {
+							"Magento_Ui/js/core/app": {
+								"components": {
+									"qty-counter": {
+										"component": "qty-counter",
+										"config": {
+											"qty": <?php echo $block->getProductDefaultQty() * 1 ?>,
+											"dataValidate": <?php echo json_encode($block->getQuantityValidators()) ?>
+										}
+									}
+								 }
+							}
+						}
+					}
+				</script>
+			</div>
+		</div>
+	</div>
+	<div class="product-btn">
+		<div class="btns">
+			<input type="hidden" class="popup-checkout-url" value="<?php echo $block->getUrl('checkout', ['_secure' => true]);?>" />
+			<button type="submit"
+				title="<?php /* @escapeNotVerified */ echo $buttonTitle ?>"
+				class="btn btn-fill"
+				id="product-addtocart-button">
+				<img src="<?php echo $this->getViewFileUrl('images/cart-small.svg'); ?>" alt="Add To Cart">
+				<?php /* @escapeNotVerified */ echo $buttonTitle ?>
+			</button>
+		</div>
+		<?php
+			$buyNowHtml = $this->getLayout()->createBlock('Mageprince\BuyNow\Block\Product\ListProduct')->setProduct($_product)->setTemplate('Mageprince_BuyNow::buynow-view.phtml')->toHtml();
+			echo $buyNowHtml; 
+		?>
+		<div class="favorites_btns">
+			<a href="javascript:void(0)" data-post='<?php  echo $this->helper('Magento\Wishlist\Helper\Data')->getAddParams($_product) ?>' class="towishlist wish-icon" data-action="add-to-wishlist" title="Add To Wishlist">
+			<img src="<?php echo $this->getViewFileUrl('images/wishlist-black.svg'); ?>" alt="Wishlist"> <?php echo __('Add To Favorites'); ?></a>
+		</div>
+	</div>
+<?php } ?>
+<?php if ($block->isRedirectToCartEnabled()) : ?>
+    <script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<?php else : ?>
+    <script>
+        require([
+            'jquery',
+            'mage/mage',
+            'Magento_Catalog/product/view/validation',
+            'Magento_Catalog/js/catalog-add-to-cart'
+        ], function ($) {
+            'use strict';
+
+            $('#product_addtocart_form').mage('validation', {
+                radioCheckboxClosest: '.nested',
+                submitHandler: function (form) {
+                    var widget = $(form).catalogAddToCart({
+                        bindSubmit: false
+                    });
+
+                    widget.catalogAddToCart('submitForm', $(form));
+
+                    return false;
+                }
+            });
+        });
+    </script>
+<?php endif; ?>
+<script type="text/javascript">
+require(['jquery'],function($){
+    $(document).ready(function() {
+        $('body').addClass("intro-quick-view");
+    });
+});
+</script>

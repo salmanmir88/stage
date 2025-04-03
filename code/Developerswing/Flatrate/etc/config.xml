@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<flatratepriceandmessage>
+			<configuration>
+				<enable/>
+				<bahrain_message/>
+				<bahrain_price/>
+				<kuwait_message/>
+				<kuwait_price/>
+				<oman_message/>
+				<oman_price/>
+				<saudi_arabia_message/>
+				<saudi_arabia_price/>
+				<united_arab_emirates_message/>
+				<united_arab_emirates_price/>
+			</configuration>
+		</flatratepriceandmessage>
+	</default>
+</config>

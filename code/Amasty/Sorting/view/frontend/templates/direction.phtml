@@ -1,0 +1,11 @@
+<?php /** @var \Amasty\Sorting\Block\Direction $block */ ?>
+
+<script type="text/x-magento-init">
+        {
+            "[data-role='sorter']": {
+                "Amasty_Sorting/js/direction": {
+                    "permanentDirectionMethods": <?= /** @noEscape */ $block->getPermanentDirectionAttributesJson() ?>
+                }
+            }
+        }
+</script>

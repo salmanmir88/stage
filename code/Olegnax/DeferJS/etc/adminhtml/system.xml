@@ -1,0 +1,97 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author      Olegnax
+ * @package     Olegnax_DeferJS
+ * @copyright   Copyright (c) 2021 Olegnax (http://olegnax.com/). All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="olegnax" sortOrder="999" translate="label">
+			<label>olegnax</label>
+		</tab>
+		<section id="ox_deferjs" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="80" translate="label">
+			<label>Defer JS</label>
+			<tab>olegnax</tab>
+			<resource>Olegnax_DeferJS::DeferJS</resource>
+			<group id="info" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="0" translate="label">
+				<frontend_model>Olegnax\DeferJS\Block\Adminhtml\System\Config\Form\Info</frontend_model>
+			</group>
+			<group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+				<label>General</label>
+				<field id="enable" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20" translate="label"
+					   type="select">
+					<label>Enable</label>
+					<frontend_class>on-off-trigger</frontend_class>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="combine_inline" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="30"
+					   translate="label comment" type="select">
+					<label>Combine inline scripts</label>
+					<comment>Place all(except magento) inline scripts in a single script tag. Try to disable this if you
+						have issues with 3rd party scripts and extensions.
+					</comment>
+					<frontend_class>on-off-trigger</frontend_class>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="enable">1</field>
+					</depends>
+				</field>
+				<field id="combine_magentoinit" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="40"
+					   translate="label comment" type="select">
+					<label>Combine magento init scripts</label>
+					<comment>Place all magento init scripts in a single script tag. Try to disable this if you have
+						issues with default magento functionality.
+					</comment>
+					<frontend_class>on-off-trigger</frontend_class>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+						<field id="enable">1</field>
+					</depends>
+				</field>
+			</group>
+			<group id="excludes" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20"
+				   translate="label comment">
+				<label>Excludes</label>
+				<comment>If you have issues on exact page or path you can add it to excludes with following options:
+				</comment>
+				<field id="exclude_homepage" translate="label comment" type="select" showInDefault="1" showInWebsite="1"
+					   showInStore="1" sortOrder="5">
+					<label>Exclude Homepage</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<frontend_class>on-off-trigger</frontend_class>
+				</field>
+				<field id="exclude_action" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1"
+					   type="text" sortOrder="10">
+					<label>Exclude Actions</label>
+					<frontend_model>Olegnax\DeferJS\Block\Adminhtml\System\Config\Form\ActionArray</frontend_model>
+					<backend_model>Olegnax\DeferJS\Model\Config\Backend\Serialized</backend_model>
+					<comment>Listed actions will be unaffected by defer javascript. Use:
+						{module}_{controller}_{action}
+					</comment>
+				</field>
+				<field id="exclude_path" translate="label comment" showInDefault="1" showInWebsite="1" showInStore="1"
+					   type="text" sortOrder="20">
+					<label>Exclude Path</label>
+					<frontend_model>Olegnax\DeferJS\Block\Adminhtml\System\Config\Form\ActionArray</frontend_model>
+					<backend_model>Olegnax\DeferJS\Model\Config\Backend\Serialized</backend_model>
+					<comment>Listed paths will be unaffected by defer javascript. Use: {Example: gear/bags.html}
+					</comment>
+				</field>
+				<field id="show_action_path" translate="label comment" type="select" showInDefault="1" showInWebsite="1"
+					   showInStore="1" sortOrder="30">
+					<label>Show Page Action and Path</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>Enable this option to show hints (actions and paths of the current page) below footer on
+						front end. This will help you to determine what to add in exclude options. Do not enable it on
+						live store.
+					</comment>
+					<frontend_class>on-off-trigger</frontend_class>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

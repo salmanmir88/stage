@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui/etc/ui_configuration.xsd">
+    <fieldset name="product-details">
+        <field name="manufacturer">  <!--attribute code -->
+             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Kpopia\CustomWork\Model\Config\Source\BrandOptions</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">brand</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="dataScope" xsi:type="string">manufacturer</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="chipsEnabled" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">5</item>
+                    <item name="listens" xsi:type="array">
+                        <item name="newOption" xsi:type="string">toggleOptionSelected</item>
+                    </item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="source" xsi:type="string">conditions</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- <event name="sales_order_place_after">
+        <observer name="update_order_item_qty" instance="Kpopia\CustomWork\Observer\UpdateOrderItem" />
+        <observer name="update_category_name" instance="Kpopia\CustomWork\Observer\UpdateCategoryName" />
+    </event> -->
+    <event name="checkout_submit_all_after">
+        <observer name="update_order_item_qty" instance="Kpopia\CustomWork\Observer\UpdateOrderItem" />
+        <observer name="update_category_name" instance="Kpopia\CustomWork\Observer\UpdateCategoryName" />
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="update_order_item_qty_on_save" instance="Kpopia\CustomWork\Observer\UpdateOrderItem" />
+        <observer name="update_category_name_on_save" instance="Kpopia\CustomWork\Observer\UpdateCategoryName" />
+    </event>
+</config>

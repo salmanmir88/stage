@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Eav\Model\Attribute\Data\Text">
+        <plugin name="custom_validate_value_plugin"
+            type="Kpopia\CustomWork\Model\Plugin\Attribute\Data\Text" />
+    </type>
+    <preference for="Magento\Framework\View\Element\Html\Calendar"
+        type="Kpopia\CustomWork\View\Element\Html\Calendar" />
+    <preference for="Amasty\Reports\Model\ResourceModel\Sales\OrderItems\Collection"
+        type="Kpopia\CustomWork\Model\ResourceModel\Sales\OrderItems\Collection" />
+    <preference for="Amasty\Reports\Model\ResourceModel\Sales\OrderItems\Grid\Collection"
+        type="Kpopia\CustomWork\Model\ResourceModel\Sales\OrderItems\Grid\Collection" />
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="kpopiaupdateorderitems" xsi:type="object">
+                    Kpopia\CustomWork\Console\Command\UpdateOrderItemsCommand</item>
+                <item name="kpopiaupdatecategorynames" xsi:type="object">
+                    Kpopia\CustomWork\Console\Command\UpdateCategoryNamesCommand</item>
+                <item name="kpopiaupdatereleasedate" xsi:type="object">
+                    Kpopia\CustomWork\Console\Command\UpdateReleaseDateCommand</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order">
+		<column xsi:type="smallint" name="multitime" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="multitime"/>
+	</table>
+	<table name="sales_order_grid">
+		<column xsi:type="smallint" name="multitime" padding="5" unsigned="true" nullable="false" identity="false" default="0" comment="multitime"/>
+		<column xsi:type="timestamp" name="invoice_date" nullable="true" comment="Invoice Date"/>
+		<column xsi:type="timestamp" name="last_updated_at" nullable="true" comment="Last Updated At"/>
+		<column xsi:type="timestamp" name="shipment_date" nullable="true" comment="Shipment Date"/>
+	</table>
+	<table name="sales_order_item">
+		<column name="product_common_code" nullable="true" xsi:type="varchar" comment="Product common code" length="255"/>
+		<column name="product_model" nullable="true" xsi:type="varchar" comment="Product model" length="255"/>
+		<column name="version" nullable="true" xsi:type="varchar" comment="Version" length="255"/>
+		<column name="album_qyt" nullable="true" xsi:type="varchar" comment="Album Qyt" length="255"/>
+		<column name="is_featured" xsi:type="int" padding="10" unsigned="true" default="1" comment="is_featured"/>
+		<column name="upc" nullable="true" xsi:type="varchar" comment="Upc" length="255"/>
+		<column name="link" nullable="true" xsi:type="varchar" comment="Link" length="255"/>
+		<column name="category_id" nullable="true" xsi:type="varchar" comment="Link" length="255"/>
+		<column xsi:type="timestamp" name="invoice_at" nullable="true" comment="Invoice Date"/>
+	</table>
+	<table name="quote_item">
+		<column name="product_common_code" nullable="true" xsi:type="varchar" comment="Product common code" length="255"/>
+		<column name="product_model" nullable="true" xsi:type="varchar" comment="Product model" length="255"/>
+		<column name="version" nullable="true" xsi:type="varchar" comment="Version" length="255"/>
+		<column name="album_qyt" nullable="true" xsi:type="varchar" comment="Album Qyt" length="255"/>
+		<column name="is_featured" xsi:type="int" padding="10" unsigned="true" default="1" comment="is_featured"/>
+		<column name="upc" nullable="true" xsi:type="varchar" comment="Upc" length="255"/>
+		<column name="link" nullable="true" xsi:type="varchar" comment="Link" length="255"/>
+	</table>
+</schema>

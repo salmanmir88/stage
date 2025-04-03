@@ -1,0 +1,25 @@
+{
+    "name": "prince/module-faq",
+    "description": "Magento2 FAQ Module",
+    "homepage": "https://github.com/mageprince/magento2-FAQ",
+    "type": "magento2-module",
+    "version": "2.0.6",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+          "name": "Prince Patel",
+          "email": "mail.mageprince@gmail.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/mageprince/magento2-FAQ/issues"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Mageprince\\Faq\\": ""
+        }
+    }
+}

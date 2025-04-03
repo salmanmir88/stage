@@ -1,0 +1,41 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <action name="order_ship">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">order_ship_mass</item>
+                        <item name="label" xsi:type="string" translate="true">Create Shipment</item>
+                        <item name="url" xsi:type="url" path="ordermass/order/massship" />
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Create Shipment</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you
+                                want to create shipment for selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+    </listingToolbar>
+    <columns name="sales_order_columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">false</item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="main_status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Kpopia\Filter\Model\Config\Source\OrderState</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Main Status</item>
+                    <item name="sortOrder" xsi:type="number">75</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

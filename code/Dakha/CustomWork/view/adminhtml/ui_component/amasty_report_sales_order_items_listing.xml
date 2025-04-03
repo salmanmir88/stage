@@ -1,0 +1,96 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="amreports_sales_overview_columns">
+        <column name="order_status">
+            <settings>
+                <filter>multiselect</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="category_id"
+            class="Dakha\CustomWork\Ui\Component\Listing\Column\Product\Category">
+            <settings>
+                <filter>multiselect</filter>
+                <dataType>select</dataType>
+                <label translate="true">Category</label>
+            </settings>
+        </column>
+
+        <column name="barcode" class="Dakha\CustomWork\Ui\Component\Listing\Column\Product\Barcode">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="label" xsi:type="string" translate="true">Barcode</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+        <column name="total_qty"
+            class="Dakha\CustomWork\Ui\Component\Listing\Column\Product\TotalQty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">false</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="label" xsi:type="string" translate="true">Total Qty</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </column>
+        <column name="invoice_date" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="label" xsi:type="string" translate="true">Invoice Date</item>
+                    <item name="sortOrder" xsi:type="number">35</item>
+                </item>
+            </argument>
+        </column>
+        <column name="release_date" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="label" xsi:type="string" translate="true">Release Date</item>
+                    <item name="sortOrder" xsi:type="number">45</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+    <listingToolbar name="listing_top">
+        <filters name="listing_filters">
+            <filterSelect name="order_status" provider="${ $.parentName }"
+                component="Magento_Ui/js/form/element/ui-select"
+                template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <options class="Magento\Sales\Model\Config\Source\Order\Status" />
+                    <caption translate="true">Select</caption>
+                    <label translate="true">Status</label>
+                    <dataScope>order_status</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+            <filterSelect name="category_id" provider="${ $.parentName }"
+                component="Magento_Ui/js/form/element/ui-select"
+                template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <options class="Meetanshi\GridColumn\Model\Category\Categorylist" />
+                    <caption translate="true">Select</caption>
+                    <label translate="true">Categories</label>
+                    <dataScope>category_id</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+
+        </filters>
+    </listingToolbar>
+
+</listing>

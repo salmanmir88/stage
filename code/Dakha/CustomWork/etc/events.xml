@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- Observer for order placed event -->
+    <event name="checkout_submit_all_after">
+        <observer name="order_place" instance="Dakha\CustomWork\Observer\OrderPlace" />
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="sales_order_save_observer" instance="Dakha\CustomWork\Observer\OrderUpdate" />
+    </event>
+    <event name="custom_order_comment_save">
+        <observer name="sales_order_comment_save_observer"
+            instance="Dakha\CustomWork\Observer\OrderUpdate" />
+    </event>
+
+    <event name="sales_order_status_history_save_after">
+        <observer name="order_status_history_observer"
+            instance="Dakha\CustomWork\Observer\OrderUpdate" />
+    </event>
+</config>

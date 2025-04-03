@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="sales_order_columns">
+        <column name="days" class="Dakha\CustomWork\Ui\Component\Listing\Column\Track\OrderTracking">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Days</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="align" xsi:type="string">right</item>
+                    <item name="filter" xsi:type="string">false</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="week" class="Dakha\CustomWork\Ui\Component\Listing\Column\Track\Week">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Week</item>
+                    <item name="sortOrder" xsi:type="number">51</item> <!-- Adjusted sortOrder -->
+                    <item name="align" xsi:type="string">right</item>
+                    <item name="filter" xsi:type="string">false</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

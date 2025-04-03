@@ -1,0 +1,34 @@
+{
+    "name": "dominicwatts/csvupload",
+    "description": "Base for any type of csv upload and processing",
+    "type": "magento2-module",
+    "license": "proprietary",
+    "version": "1.0.9",
+    "authors": [
+        {
+            "name": "Dominic Xigen",
+            "email": "dominic@xigen.co.uk"
+        }
+    ],
+    "minimum-stability": "dev",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        }
+    ],
+    "require": {
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-ui": "*",
+        "php": ">=7.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Xigen\\CsvUpload\\": ""
+        },
+        "files": [
+            "registration.php"
+        ]
+    }
+}

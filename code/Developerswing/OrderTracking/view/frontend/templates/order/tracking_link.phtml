@@ -1,0 +1,22 @@
+<style>
+    .order-tracking-link{
+        padding-bottom: 15px;
+    }
+    .order-tracking-link a{
+        color: #007bdb !important;
+    }
+</style>
+<?php
+/** @var \Developerswing\OrderTracking\Block\Adminhtml\Order\View\TrackingLink $block */
+$trackingLink = $block->getTrackingLink();
+?>
+
+<div class="order-tracking-link">
+    <strong>Order Tracking Link:</strong>
+    <?php if ($trackingLink): ?>
+        <a href="<?= $block->escapeUrl($trackingLink) ?>" target="_blank"><?= $block->escapeHtml($trackingLink) ?></a>
+    <?php else: ?>
+        <span>No tracking link available.</span>
+    <?php endif; ?>
+</div>
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order_item">
+		<column name="total_qty" nullable="true" xsi:type="int" comment="Total Quantity"/>
+		<column xsi:type="timestamp" name="release_date" nullable="true" comment="Release Date"/>
+	</table>
+	<table name="quote_item">
+		<column name="total_qty" nullable="true" xsi:type="int" comment="Total Quantity"/>
+	</table>
+</schema>

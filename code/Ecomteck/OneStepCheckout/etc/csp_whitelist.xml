@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Shipper HQ
+  ~ Thanks to https://github.com/ProxiBlue for providing this file
+  ~ @category ShipperHQ
+  ~ @package shq
+  ~ @copyright Copyright (c) 2022 Zowta LTD and Zowta LLC (http://www.ShipperHQ.com)
+  ~ @license http://opensource.org/licenses/osl-3.0.php Open Software License (OSL 3.0)
+  ~ @author ShipperHQ Team sales@shipperhq.com
+  -->
+
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="maps.googleapis.com" type="host">maps.googleapis.com</value>
+                <value id="unsafe-inline" type="host">'unsafe-inline'</value>
+                <value id="static.addtoany.com" type="host">https://static.addtoany.com</value>
+                <value id="applepay.cdn-apple.com" type="host">https://applepay.cdn-apple.com</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="static.addtoany.com" type="host">https://static.addtoany.com</value>
+                <value id="unsafe-inline" type="host">'unsafe-inline'</value>
+                <value id="maxcdn.bootstrapcdn.com" type="host">https://maxcdn.bootstrapcdn.com</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <value id="maxcdn.bootstrapcdn.com" type="host">https://maxcdn.bootstrapcdn.com</value>
+                <value id="static.addtoany.com" type="host">https://static.addtoany.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="maps.googleapis.com" type="host">maps.googleapis.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="maps.gstatic" type="host">maps.gstatic.com</value>
+                <value id="static.addtoany.com" type="host">https://static.addtoany.com</value>
+
+                <value id="ktown4u" type="host">https://www.ktown4u.com</value>
+                <value id="ktown4u-wildcard" type="host">https://*.ktown4u.com</value>
+
+                <value id="lh3ggpht" type="host">https://lh3.ggpht.com</value>
+                <value id="lh3ggpht-wildcard" type="host">https://*.ggpht.com</value>
+
+                <!-- Shopify CDN -->
+                <value id="shopify-cdn" type="host">https://cdn.shopify.com</value>
+                <value id="shopify-cdn-wildcard" type="host">https://*.shopify.com</value>
+                <value id="shopify-files-wildcard" type="host">https://*.s.shopify.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

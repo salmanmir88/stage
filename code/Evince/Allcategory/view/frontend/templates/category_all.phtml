@@ -1,0 +1,42 @@
+<?php 
+$categories = $block->getCategoryCollection();
+$helper = $this->helper('Evince\HomeProducts\Helper\Data');
+$viewMode = 'grid';
+$excludeCategory = array("Default Category", "Best Seller", "New Arrival");
+?>
+
+<div class="brand-main">
+
+    <?php if ($categories->getSize()): ?>
+        <div class="shop-by-title"><h2><?php echo __('Shop By Category') ?></h2></div>
+        <div class="products wrapper <?= /* @noEscape */ $viewMode ?> products-<?= /* @noEscape */ $viewMode ?>">
+            <ol class="products list items product-items">
+                <?php foreach ($categories as $category): 
+                     if(!in_array($category->getName(),$excludeCategory)):   ?>
+                    <li class="item product product-item">
+                        <div class="product-item-info" data-container="product-<?= /* @noEscape */ $viewMode ?>">
+                            <a href="<?php echo $category->getUrl(); ?>" class="product photo product-item-photo" tabindex="-1">
+                                <?php
+                                $categoryImg = $helper->getCategoryImage($category->getId());
+                                if ($categoryImg) {
+                                    ?>    
+                                    <img src="<?php echo $categoryImg; ?>" />
+                                <?php } else { ?>    
+                                    <img src="<?php echo $helper->getPlaceHolderImage(); ?>" />
+                                <?php } ?>
+                            </a>
+                            <div class="brand-cate-name">
+                                <strong class="product name product-item-name">
+                                    <a class="product-item-link" href="<?php echo $category->getUrl(); ?>">
+                                        <?php echo $category->getName(); ?>
+                                    </a>
+                                </strong>    
+                            </div>
+                        </div>
+                    </li>    
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </ol>
+        </div>                  
+    <?php endif; ?>
+</div>

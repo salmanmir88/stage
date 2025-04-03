@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+?>
+<?php
+/* @var $block \Magento\Sales\Block\Adminhtml\Items\Column\Name */
+?>
+<?php if ($_item = $block->getItem()) : ?>
+    <?php $helper = $this->helper('Evincemage\OrderImage\Helper\Image'); ?>
+    <?php $product = $_item->getProduct() ?>
+        <?php if(is_null($product)): ?>
+        <?php $imageUrl= $helper->getPlaceHolderImage('image'); ?>    
+        <?php echo "<img src=".$imageUrl."  width='150px' height='150px'>"; ?>
+        <?php else: ?>    
+        <?php $helper->addGallery($product);
+              $images = $helper->getGalleryImages($product);
+              $objectManager =\Magento\Framework\App\ObjectManager::getInstance();
+        $helperImport = $objectManager->get('\Magento\Catalog\Helper\Image');
+        $imageUrl = $helperImport->init($product, 'product_page_image_small')
+                ->setImageFile($product->getSmallImage()) // image,small_image,thumbnail
+                ->resize(380)
+                ->getUrl();
+        echo "<img src=".$imageUrl." alt=".$product->getName()." width='150px' height='150px'>"; 
+
+        ?>
+    <?php endif; ?>    
+<?php endif; ?>

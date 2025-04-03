@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="evince" translate="label" sortOrder="10">
+            <label>Evince</label>
+        </tab>
+        <section id="all" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Slider Products</label>
+            <tab>evince</tab>
+            <resource>Evince_ViewAll::helloworld_config</resource>
+            <group id="home" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Homepage Configuration</label>
+                <field id="bestseller_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Best Seller View All Url</label>
+                    <validate>validate-url</validate>
+                </field>
+                <field id="category_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shop By Category View All Url</label>
+                    <validate>validate-url</validate>
+                </field>
+                <field id="newarrival_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Arrival View All Url</label>
+                    <validate>validate-url</validate>
+                </field>
+            </group>
+            <group id="brand" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Brand Page Configuration</label>
+                <field id="bestseller_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Best Seller View All Url</label>
+                    <validate>validate-url</validate>
+                </field>
+                <!-- <field id="category_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Shop By Category View All Url</label>
+                        <validate>validate-url</validate>
+                        <comment>this is a comment</comment>
+                </field> -->
+                <field id="newarrival_url" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Arrival View All Url</label>
+                    <validate>validate-url</validate>
+                </field>
+            </group> 
+        </section>
+        <section id="freeShipment" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Free Shipment Message</label>
+            <tab>evince</tab>
+            <resource>Evince_ViewAll::freeshipment_config</resource>
+            <group id="tooltiptext" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Free Shipment Message</label>
+                <field id="textmsg" translate="label" type="textarea" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Free Shipment Message</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,18 @@
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).ready(function () {
+            // Retrieve data from localStorage
+            var shippingData = JSON.parse(localStorage.getItem('checkoutShippingData'));
+            if (shippingData) {
+                // Push data to GTM Data Layer
+                window.dataLayer = window.dataLayer || [];
+                window.dataLayer.push({
+                    'event': 'shippingInfoSuccess',
+                    'shippingData': shippingData
+                });
+                // Optional: Clear the data from localStorage after pushing
+                localStorage.removeItem('checkoutShippingData');
+            }
+        });
+    });
+</script>

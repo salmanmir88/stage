@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>            
+                <!-- 
+                /*
+                * Fixed: product.info block placed between info.main and info.media on downloadable, bundle, etc. 
+                * Since magento version 2.4.7 for some reason info.main was positioned relatively to tabs.
+                * Rolled back to previous position.
+                */
+                -->
+                <move element="product.info.main" destination="main" />
+                <move element="product.info.main" destination="content" before="-" />
+	</body>
+</page>

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp/etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <value id="google" type="host">*.google.com</value>
+                <value id="google-apis" type="host">*.googleapis.com</value>
+                <value id="g-static" type="host">*.gstatic.com</value>
+                <value id="stripe" type="host">*.stripe.com</value>
+                <value id="instagram" type="host">*.instagram.com</value>
+                <value id="fb" type="host">*.facebook.net</value>
+                <value id="addany" type="host">*.addtoany.com</value>
+            </values>
+        </policy>
+        <policy id="style-src">
+            <values>
+                <value id="google-apis" type="host">*.googleapis.com</value>
+                <value id="bootstrap-cdn" type="host">*.bootstrapcdn.com</value>
+            </values>
+        </policy>
+        <policy id="img-src">
+            <values>
+                <value id="google" type="host">*.google.com</value>
+                <value id="google-apis" type="host">*.googleapis.com</value>
+                <value id="g-static" type="host">*.gstatic.com</value>
+                <value id="data-image" type="host">'self' data:</value>
+                <value id="fb-image" type="host">*.facebook.net</value>
+                <value id="facebook-image" type="host">*.facebook.com</value>
+            </values>
+        </policy>
+        <policy id="connect-src">
+            <values>
+                <value id="google-analytics" type="host">*.google-analytics.com</value>
+                <value id="geostag-cardinalcommerce" type="host">*.cardinalcommerce.com</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <value id="g-static" type="host">*.gstatic.com</value>
+                <value id="bootstrapcdn" type="host">*.bootstrapcdn.com</value>
+                <value id="data-font" type="host">'self' data:</value>
+            </values>
+        </policy>
+        <policy id="frame-src">
+            <values>
+                <value id="google" type="host">*.google.com</value>
+                <value id="stripe" type="host">*.stripe.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

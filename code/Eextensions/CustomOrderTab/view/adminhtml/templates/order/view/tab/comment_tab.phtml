@@ -1,0 +1,91 @@
+<?php
+/**
+* @var $block \Eextensions\CustomOrderTab\Block\Adminhtml\Order\View\Tab\CommentTab
+*/
+
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$FormKey = $objectManager->get('Magento\Framework\Data\Form\FormKey');
+
+$user = $block->getAdminCurrentUser();
+
+// $commentCollection = $objectManager->create('\Eextensions\CustomOrderTab\Model\ResourceModel\Comment\Collection');
+$commentCollection = $block->getCommentCollection();
+// pr($commentCollection->getData());die;
+
+
+?>
+
+<form  action="<?php echo $block->getPostUrl() ; ?>" name="feedback_form" id="dealer-form" class="comment_form"  method="post"  
+		data-hasrequired="<?php echo __('* Required Fields') ?>"     
+		data-mage-init='{"validation":{}}' enctype="multipart/form-data" 
+		data-role="comment_form" data-bind="scope: 'comment_form'"
+		autocomplete="off" novalidate >
+	<div class="form-cotnt">
+		<div class="admin__page-section-item-title">
+			<span class="title"><?php echo __('Add Order Comment'); ?></span>
+		</div>
+		<div class="fieldset comment-fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+			
+			<input name="form_key" type="hidden" value="<?php echo $FormKey->getFormKey(); ?>">
+			
+			<input type="hidden" name="order_id" class="form-control inputbox_control" value="<?php echo $block->getOrderId(); ?>" readonly="true">
+			
+			<input type="hidden" name="increment_id" class="form-control inputbox_control" value="<?php echo $block->getOrderIncrementId(); ?>" readonly="true" />
+			
+			<input type="hidden" name="user_id" class="form-control inputbox_control" value="<?php echo $block->getAdminUserId(); ?>" readonly="true" />
+			
+			<input type="hidden" name="title" class="form-control inputbox_control" value="<?php echo $block->getAdminUserName(); ?>" readonly="true" />
+			
+			<input type="hidden" name="user_email" class="form-control inputbox_control" value="<?php echo $block->getAdminUserEmail(); ?>" readonly="true" />
+			 
+			<div class="comment required">
+				<div class="form-group control">
+					<?php /* <label class="control-label" for="inputNormal"><?php echo __('Feedback'); ?><span>*</span></label> */ ?>
+					<textarea class="form-control inputbox_control" rows="5" cols="80"  placeholder="<?php echo __('Add Comment'); ?>" data-validate="{required:true}" type="text" name="comment"></textarea>
+				</div>
+			 </div>
+		</div>
+	</div>
+	<div class="actions-toolbar" style="margin-top: 15px;">
+		<div class="primary">
+			<button type="submit" title="<?php echo __('Submit') ?>" class="action submit primary btn-default">
+				<span><?php echo __('Submit') ?></span>
+			</button>
+		</div>
+	</div>
+</form>
+
+<?php if(isset($commentCollection) && count($commentCollection)>0){ ?>
+<div class="fieldset-wrapper order-information" style="width: 100%;">
+   <div class="fieldset-wrapper-title">
+       <span class="edit-order-comments-block-title">
+	   <?php /* @escapeNotVerified */ echo __('Comments for this Order') ?></span>
+   </div>
+   <table class="admin__table-secondary" width="100%">
+       <tbody>
+	   <tr>
+           <th><?php echo __('Sr No.') ?></th>
+           <th><?php echo __('Username') ?></th>
+           <th width="60%"><?php echo __('Comment') ?></th>
+           <th><?php echo __('Date') ?></th>
+       </tr>
+	   
+	   <?php $total = count($commentCollection); ?>
+	   
+	   <?php 
+			$i=$total; foreach($commentCollection as $comment){ 
+			
+			$originalDate = $comment->getCreatedAt();
+			$newDate = date("M d, Y, H:i:s", strtotime($originalDate));
+	   ?>
+		   <tr>
+				<td><?php echo $i; ?></td>
+				<td><?php echo $comment->getTitle(); ?></td>
+				<td><?php echo nl2br($comment->getComment()); ?></td>
+				<td><?php echo $newDate; ?></td>
+		   </tr>
+	   <?php $i--; } ?>
+       </tbody>
+   </table>
+</div>
+<?php } ?>

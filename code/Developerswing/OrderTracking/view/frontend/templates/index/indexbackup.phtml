@@ -1,0 +1,114 @@
+<div class="all-track-info">
+<section class="track-order-step-section">
+  <div class="">
+    <h2 class="track-order-step-text-center-main"><?php echo __('Track Your Order Step By Step')?></h2>
+  </div>
+</section>
+
+<section>
+  <div class="container-search-box">
+    <p class="text-left"><?php echo __('Order number');?></p>
+    <div class="row">
+      <div class="col-md-12">
+        <form class="track-number-form" method="post" action="<?php echo $this->getUrl('ordertrack');?>">
+          <input type="text" placeholder=" <?php echo __('Your order number')?>" value="<?php echo $block->getOrderNumber()?>" name="search">
+          <button type="submit"><?php echo __('Track')?></button>
+        </form>
+        <br>
+      </div>
+    </div>
+    
+    <?php if($block->getOrderNumber()):?> 
+      <?php $order = $block->getOrderSearch();?>
+      <?php if($order): ?>  
+        <?php if($order->getId()): ?>  
+          <?php if($order->getStatus()=='ship_via_courier'):?>
+            <p class="text-left track-number-example"><?php echo __('IMPORTANT NOTICE FOR PRE-ORDER - when you have a pre-order item in an order with another item that is already available, your entire order will be held until the pre-order item arrives and is in stock ( items are not sent separately within the same order )')?></p>
+            <div class="prodict-itam-track">
+              <?php foreach($order->getAllItems() as $_item):?> 
+                <?php $_product = $block->getProductById($_item->getProductId());?> 
+                <br><br>
+                <div class=" row">
+                  <div class="col-md-2 col-sm-1 weufhiuqefg">
+                    <img src="<?php echo $block->getProductImageUrl($_item->getProductId());?>" class="product-image-track">
+                  </div>
+                  <div class="col-md-10 col-sm-11 weufhiuqefg content-box-main">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row"> 
+                          <div class="col-md-6">
+                            <span class="float-left mobile-margin "><b><?php echo $_item->getName()?></b></span> 
+                          </div>
+                          <div class="col-md-6">
+                            <span class="float-left mobile-size-place-date mobile-margin"><?php echo __('Place')?> <b><?php echo $order->getCreatedAt();?></b></span> 
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-12 track-mt-20">
+                        <p class="text-left"><?php echo __('This item will be released')?> <span class="released-date"><?php echo date('F d, Y', strtotime($_product->getReleaseDate()))?></span></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach;?>  
+            </div>
+          <?php endif;?>
+          
+          <?php $orderStatusArr = ['ship_via_courier','pending1','pending2','pending3','whatsapp','delayed','accepted1'];?>
+          <?php $onholdOrderstatusArr = ['holded','ship_via_fall','prepared_for_jeddah','repeated','for_a_courier','prep_jeddah','held_at_fetchr','rewinded','pre_order'];?>
+          
+          <?php if($order->getStatus()!='ship_via_courier' && !$order->getPreOrder() && in_array($order->getStatus(), $orderStatusArr)):?>
+            <span class="customer-message">
+              <p><?php echo __('Dear valuable customer please contact us via E-mail & Kindly Provide us with your correct mobile number / order  number so we can be able to deliver your order')?></p>
+              <a href="mailto:team@kpopiashop.com">team@kpopiashop.com</a> 
+            </span>
+          <?php elseif (in_array($order->getStatus(), $onholdOrderstatusArr)):?>
+            <span class="customer-message">
+              <p><?php echo __('Dear valuable customer please contact us via E-mail & Kindly Provide us with your correct mobile number / order  number so we can be able to deliver your order')?></p>
+              <a href="mailto:team@kpopiashop.com">team@kpopiashop.com</a> 
+            </span>  
+          <?php endif;?>
+          
+          <?php if($order->getStatus()!='ship_via_courier'):?>
+            <div class="prodict-itam-track">
+              <?php foreach($order->getAllItems() as $_item):?> 
+                <?php $_product = $block->getProductById($_item->getProductId());?> 
+                <div class="row">
+                  <div class="col-md-2 col-sm-1">
+                    <img src="<?php echo $block->getProductImageUrl($_item->getProductId());?>" class="product-image-track">
+                  </div>
+                  <div class="col-md-10 col-sm-11 content-box-main">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div class="row"> 
+                          <div class="col-md-6">
+                            <span class="float-left mobile-margin "><b><?php echo $_item->getName()?></b></span> 
+                          </div>
+                          <div class="col-md-6">
+                            <span class="float-left mobile-size-place-date mobile-margin "><?php echo __('Place')?> <b><?php echo $order->getCreatedAt();?></b></span> 
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <?php endforeach;?>   
+            </div>
+          <?php endif;?>
+          
+          <?php $shippingCarrier = $order;?>
+          <?php $orderStatusArr = ['ship_via_courier','pending1','pending2','pending3','whatsapp','delayed','accepted1','holded','ship_via_fall','prepared_for_jeddah','repeated','for_a_courier','prep_jeddah','held_at_fetchr','rewinded','pre_order','pending','shipping_mecca','whatsapp','repeated'];?>
+          
+          <?php if($order->getStatus()!='ship_via_courier' && !$order->getPreOrder() && !in_array($order->getStatus(), $orderStatusArr)):?>
+            <?php echo $this->getLayout()->createBlock("Developerswing\OrderTracking\Block\Index\Index")->setTemplate("Developerswing_OrderTracking::index/ordertrack.phtml")->toHtml() ?> 
+          <?php endif;?>
+        <?php else:?>
+          <div class="not-found"><?php echo __('Order not found or invalid ID')?></div>
+        <?php endif;?>
+      <?php else:?>
+        <div class="not-found"><?php echo __('Order not found')?></div>
+      <?php endif;?>
+    <?php endif;?>
+</section>
+</div>
+

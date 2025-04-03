@@ -1,0 +1,38 @@
+<div>
+    <h1><?php echo __("Order Status Overview"); ?></h1>
+    <table class="data-grid">
+        <thead>
+            <tr>
+                <th><?php echo __("Order Status"); ?></th>
+                <th><?php echo __("Total Order Count"); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if (count($this->getData('status_data')) > 0): ?>
+                <?php foreach ($this->getData('status_data') as $status): ?>
+                    <tr>
+                        <td><?php echo $this->escapeHtml($status['status_label']); ?></td>
+                        <td><?php echo $this->escapeHtml($status['order_count']); ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="2" style="text-align: center;"><h1 class="center"><?php echo __("No orders found."); ?></h1></td>
+                </tr>
+            <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .data-grid {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .data-grid th, .data-grid td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+</style>

@@ -1,0 +1,172 @@
+<?php $tracking     = $block->getOrderIdsByTrackingNumber();?>
+<?php $trackingInfo = $block->getOrderShippingInfo($tracking,$block->getTrackingNumber());?>
+<?php $orderInfo    = $block->getOrderSearch();?>
+<?php 
+$perpareOrder     = '';
+$inwareHouese     = '';
+$shippingOrder    = '';
+$shipCreate       = '';
+$customStatus     = '';
+$deliveredStatus  = '';
+$prepareOrderDate = '';
+?>
+<?php if($orderInfo->getId()){
+$shipCreate       = $block->getShipmentDate($orderInfo->getId());
+$orderStatus      = $orderInfo->getStatus();
+$prepareOrderDate = $orderInfo->getUpdated(); 
+if($orderStatus=='customs')
+{
+  $customStatus    = true;	
+}
+if($orderStatus=='international_shipment')
+{
+  $customStatus    = true;	
+  $deliveredStatus = true;	
+}  	
+}
+?>
+<?php if(!is_array($trackingInfo)){?>
+<?php 
+   if(isset($trackingInfo->UpdateDescription)){ 
+     if($trackingInfo->UpdateDescription=='Record created.')
+      {
+         $perpareOrder     = true;
+         $prepareOrderDate = $trackingInfo->UpdateDateTime;
+         $date             = date('Y-m-d', strtotime($prepareOrderDate));
+         $daysDate         = date('Y-m-d', strtotime($date. ' + 3 day'));
+         $currenDate       = date('Y-m-d');
+         if($currenDate>=$daysDate)
+         {
+         $inwareHouese  = true;
+         $shippingOrder = true; 
+         }else{
+         $inwareHouese  = false;
+         $shippingOrder = false; 
+         }
+      }
+    }  
+?>
+<?php }else{	
+    
+}?>
+<section>
+	<div class="container-search-box">
+		<div class="prodict-itam-track">
+			<div>
+				<ul id="progressbar">
+					<li <?php if($perpareOrder){ echo 'class="active"';}?> id="step1"> <span class="track-li-mobile-view">Preparing Order</span></li>
+					<li <?php if($inwareHouese){ echo 'class="active"';}?> id="step2"><span class="track-li-mobile-view">In Warehouse</span></li>
+					<li <?php if($shippingOrder){ echo 'class="active"';}?> id="step3"><span class="track-li-mobile-view">Shipping Order</span></li>
+					<li <?php if($customStatus){ echo 'class="active"';}?> id="step4"><span class="track-li-mobile-view">Costoms</span></li>
+					<li <?php if($customStatus){ echo 'class="active"';}?> id="step5"><span class="track-li-mobile-view">WithCourier</span></li>
+					<li <?php if($deliveredStatus){ echo 'class="active"';}?> id="step6"><span class="track-li-mobile-view">Delivered</span></li>
+				</ul>
+			</div>
+            <?php if($perpareOrder&&!$shippingOrder&&!$customStatus&&!$deliveredStatus){?>
+			<div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th> Notice</th>
+							<th>Date</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Your order has been Created, it wll be shipped once its ready</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Created</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<?php } ?>
+			 <?php if($shippingOrder&&!$customStatus&&!$deliveredStatus){?>
+			<div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th>Notice</th>
+							<th>Date</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Your order has been Created, it wll be shipped once its ready</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Created</td>
+						</tr>
+						<?php if($shipCreate){?>
+						<tr>
+							<td>Your order is being prepared to get ready for shipping</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Packaging</td>
+						</tr>
+					    <?php }?>
+					</tbody>
+				</table>
+			</div>
+			<?php } ?>
+			 <?php if($customStatus&&!$deliveredStatus){?>
+			<div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th>Notice</th>
+							<th>Date</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Your order has been Created, it wll be shipped once its ready</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Created</td>
+						</tr>
+						<?php if($shipCreate){?>
+						<tr>
+							<td>Your order is being prepared to get ready for shipping</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Packaging</td>
+						</tr>
+					    <?php }?>
+					</tbody>
+				</table>
+			</div>
+			<?php } ?>
+			<?php if($deliveredStatus){?>
+			<div class="track-mt-20">
+				<table class="pure-table pure-table-bordered">
+					<thead>
+						<tr>
+							<th>Notice</th>
+							<th>Date</th>
+							<th>Status</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Your order has been Created, it wll be shipped once its ready</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Created</td>
+						</tr>
+						<?php if($shipCreate){?>
+						<tr>
+							<td>Your order is being prepared to get ready for shipping</td>
+							<td><?php echo $prepareOrderDate;?></td>
+							<td>Order Packaging</td>
+						</tr>
+					    <?php }?>
+					</tbody>
+				</table>
+			</div>
+			<?php } ?>
+			<div class="track-mt-20 text-left">
+				<p><b>IMPORTANT NOTICE FOR ORDER TRACKING</b>-The tracking order link will be automatically created once your order is delivered to the courier</p>
+			</div>
+
+		</div>
+	</div>
+</section>

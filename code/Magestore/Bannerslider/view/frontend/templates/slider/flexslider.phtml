@@ -1,0 +1,72 @@
+<?php  /** Banner slider **/
+
+/**
+ * Magestore
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Magestore.com license that is
+ * available through the world-wide-web at this URL:
+ * http://www.magestore.com/license-agreement.html
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Magestore
+ * @package     Magestore_Bannerslider
+ * @copyright   Copyright (c) 2012 Magestore (http://www.magestore.com/)
+ * @license     http://www.magestore.com/license-agreement.html
+ */
+
+?>
+<?php
+/** @var \Magestore\Bannerslider\Block\SliderItem $block */
+
+$styleSlide = $block->getSlider()->getStyleSlide();
+$slider = $block->getSlider();	
+$htmlId   = $block->getFlexsliderHtmlId();
+$bannerCollection = $block->getBannerCollection();
+// pr($bannerCollection->getData());die;
+?>
+
+<!--Silder-start-->
+<?php if(isset($bannerCollection)){ ?>
+	<section class="home-banner">
+		<div class="home-banner-slider owl-carousel owl-theme">
+			<?php foreach ($bannerCollection as $banner){ // pr($banner->getImage()); ?>					
+				<?php if($banner->getImage() != ""){ ?>
+					<div class="home-banner-slide">
+						<a href="<?php echo $this->geturl().$banner->getClickUrl(); ?>">
+							<img src="<?php echo $block->getBannerImageUrl($banner)?>" alt="slider-img" />
+							<?php /* <img class="visible-xs" src="<?php echo $block->getMobileBannerImageUrl($banner) ?>" alt="slider-img"   /> 
+							<img class="hidden-xs" src="<?php echo $block->getThumbnailImageUrl($banner)?>" alt="slider-img" /> */ ?>
+						</a>
+						<?php
+							$ObjectManager = \Magento\Framework\App\ObjectManager::getInstance();
+							$Contents = $ObjectManager->get('Magento\Cms\Model\Template\FilterProvider')->getPageFilter()->filter($banner->getCaption());
+							if($banner->getCaption()):
+						?>
+							<div class="slider-content">
+								<div class="container">
+									<?php echo $Contents; ?>
+								</div>
+							</div>
+						<?php endif; ?>
+					</div>
+				<?php } ?>				
+			<?php } ?>			 
+		</div>
+	</section>
+<?php } ?>
+<!--Silder-End--> 
+<script>
+require(['jquery'],function($){
+ // data img
+ $(".banner-section .item").css('background', function () {
+	var bg = ('url(' + $(this).data("image-src") + ') no-repeat');
+	return bg;
+	});
+}); 
+</script>

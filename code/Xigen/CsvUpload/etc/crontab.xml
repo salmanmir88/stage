@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Cron/etc/crontab.xsd">
+    <group id="default">
+        <job name="custom_special_price_export_csv" instance="Xigen\CsvUpload\Cron\ProcessOutputCsv" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job name="update_special_price_for_zero_quantities" instance="Xigen\CsvUpload\Cron\UpdateSpecialPrices" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job name="apply_special_price_cron" instance="Xigen\CsvUpload\Cron\ApplySpecialPrice" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+        <job name="remove_special_price_cron" instance="Xigen\CsvUpload\Cron\RemoveSpecialPrice" method="execute">
+            <schedule>* * * * *</schedule>
+        </job>
+    </group>
+</config>

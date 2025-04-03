@@ -1,0 +1,44 @@
+<?php
+$text = $block->getConfig( 'athlete2_settings/mobile_bottom_nav/bottom_nav_text_menu' ) ?: $block->getConfig('athlete2_settings/mobile_header/mobile_header_menu_text');
+$hideText   =  (bool)$block->getConfig( 'athlete2_settings/mobile_bottom_nav/bottom_nav_hide_text' );
+$icon_option   =  'athlete2_settings/mobile_bottom_nav/bottom_nav_icon_';
+$icon = $this->helper(Olegnax\Athlete2\Helper\Icons::class)->getIconHTML('menu', $icon_option); // $name, $icon_option = '', $classes = ''
+?>
+<div class="ox-bnav__item ox-bnav__menu">
+	<div data-action="toggle-mobile-nav" class="action">
+		<span class="icon">
+			<?= $icon; ?>
+		</span>
+		<span class="label <?php if($hideText){ echo "visually-hidden"; } ?>">
+			<?= $block->escapeHtml($text) ?>
+		</span>
+	</div>
+</div>
+
+<?php $scriptString = <<<script
+require([
+    'jquery'
+], function ($) {
+	(() => {
+		let flag;
+		const init = () => {
+			if(flag) {return}
+			const menuItem = $('.ox-section-items a[href="#store.menu"]').parent();
+			if(menuItem.length){
+				$("#ox-bnav__menu").on('click', function(e) {
+					menuItem.click()
+				});
+				flag = true;
+			}
+		}
+		init();
+		$('body').on('contentUpdated', init);
+	})();
+});
+script;
+if (isset($secureRenderer)){
+	echo /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false);
+} else{
+	echo /* @noEscape */ '<script>' .  $scriptString . '</script>';
+}
+

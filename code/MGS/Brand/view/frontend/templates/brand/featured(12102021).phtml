@@ -1,0 +1,74 @@
+<?php
+$params = $this->getRequest()->getParams();
+$helper = $this->helper('MGS\Brand\Helper\Data');
+$collection = $block->getCollection();
+if ($this->getConfig('list_page_settings/small_image_width') != '') {
+    $width = $this->getConfig('list_page_settings/small_image_width');
+} else {
+    $width = 240;
+}
+if ($this->getConfig('list_page_settings/small_image_height') != '') {
+    $height = $this->getConfig('list_page_settings/small_image_height');
+} else {
+    $height = 180;
+}
+?>
+<?php if ($collection->count()): ?>
+    <div class="shopby_brand_section">
+		<div class="container">
+			<div class="shopby_brand_inner">
+				<div class="heading">
+					<h2><?php echo __('Shop by BRAND'); ?></h2>
+					<?php /*
+					<a href="<?php echo $this->getUrl('brand'); ?>"><?php echo __('View all'); ?> <img src="<?php echo $this->getViewFileUrl('images/arrow-right.png'); ?>" alt="img"></a>
+					*/ ?>
+				</div>
+				<div class="shopby-slider owl-carousel owl-theme">
+					<?php foreach ($collection as $brand): 
+						// echo "<pre>";
+						// print_r($brand->getData());die; 
+					?>
+						<?php if (isset($params['char']) && $params['char'] != '' && $params['char'] == '0-9') : ?>
+							<?php $letter = strtoupper(substr($brand->getName(), 0, 1)); ?>
+							<?php if (ctype_digit($letter)): ?>
+								<div class="shopby_brand_slide">
+									<a title="<?php echo $brand->getName(); ?> gfdg"
+									   href="<?php /* echo $brand->getUrl(); */ echo $this->getUrl().'fashion.html?mgs_brand='.$brand->getOptionId(); ?>" >
+										<img src="<?php echo $brand->getSmallImageUrl(); ?>" alt="<?php echo $brand->getName(); ?>" />
+									</a>
+									<?php /* if ($this->getConfig('list_page_settings/show_brand_name')): ?>
+										<h3 class="brand-title">
+											<a title="<?php echo $brand->getName(); ?>" href="<?php echo $brand->getUrl(); ?>">
+												<?php echo $brand->getName(); ?>
+												<?php if ($this->getConfig('list_page_settings/show_product_count')): ?>
+													<span><?php echo __('(%1)', $block->getProductCount($brand)); ?></span>
+												<?php endif; ?>
+											</a>
+										</h3>
+									<?php endif; */ ?>
+								</div>
+							<?php endif; ?>
+						<?php else: ?>
+							<div class="shopby_brand_slide">
+								<a title="<?php echo $brand->getName(); ?>"
+								   href="<?php /* echo $brand->getUrl(); */ echo $this->getUrl().'fashion.html?mgs_brand='.$brand->getOptionId(); ?>" >
+									<img src="<?php echo $brand->getSmallImageUrl(); ?>" alt="<?php echo $brand->getName(); ?>"  />
+								</a>
+								<?php /* if ($this->getConfig('list_page_settings/show_brand_name')): ?>
+									<h3 class="brand-title">
+										<a title="<?php echo $brand->getName(); ?>" href="<?php echo $brand->getUrl(); ?>">
+											<?php echo $brand->getName(); ?>
+											<?php if ($this->getConfig('list_page_settings/show_product_count')): ?>
+												<span><?php echo __('(%1)', $block->getProductCount($brand)); ?></span>
+											<?php endif; ?>
+										</a>
+									</h3>
+								<?php endif; */ ?>
+							</div>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+    </div>
+<?php endif; ?>

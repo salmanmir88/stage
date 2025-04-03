@@ -1,0 +1,127 @@
+<script type="text/javascript">
+    (function () {
+        function LazyLoad() {
+            this.settings = {
+                src: 'data-original',
+                srcset: 'data-originalset',
+                selector: '.lazy',
+                selectorClass: 'lazy',
+                loadClass: 'lazy-loader',
+                loadEvent: 'lazyLoaded.oxlazy',
+                root: null,
+                rootMargin: '0px',
+                threshold: 0,
+                debouncer: 500
+            };
+            this.images = document.querySelectorAll(this.settings.selector);
+            this.observer = null;
+            let self = this;
+
+            this.load = function(event) {
+                let image = event.target;
+                if (image.src === image.getAttribute(self.settings.src)) {
+                    self.afterImageLoaded(image);
+                    if (self.observer) {
+                        self.observer.unobserve(image);
+                    }
+                }
+            };
+
+            this.afterImageLoaded = function (image) {
+                let parent = image.parentElement;
+                image.classList.remove(self.settings.selectorClass);
+                parent.classList.remove(self.settings.loadClass);
+                
+                let _parent = parent.closest('.product-item-photo');
+                if (_parent) {
+                    _parent.classList.remove(self.settings.loadClass);
+                }
+
+                image.dispatchEvent(new Event(self.settings.loadEvent));
+            };
+
+            this.destroy = function() {
+                if (self.observer) {
+                    self.observer.disconnect();
+                }
+            };
+
+            this.applyImage = function(image) {
+                let src = image.getAttribute(self.settings.src);
+                let srcset = image.getAttribute(self.settings.srcset);
+
+                if (image.tagName.toLowerCase() === 'img') {
+                    image.onload = self.load;
+                    if (src) {
+                        image.src = src;
+                    }
+                    if (srcset) {
+                        image.srcset = srcset;
+                    }
+                } else {
+                    image.style.backgroundImage = 'url(\'' + src + '\')';
+                }
+            };
+
+            this.init = function() {
+                // remove loading for images loaded with browser default loading lazy
+                if ('loading' in HTMLImageElement.prototype) {
+                    const _images = document.querySelectorAll('img[loading="lazy"], img[data-ox-image]');
+                    _images.forEach(function(image) {
+                        if (image.complete) {
+                            self.afterImageLoaded(image);
+                        } else {
+                            image.onload = function () {
+                                self.afterImageLoaded(image);
+                            }
+                        }
+                    });
+                }
+                
+                if (!('IntersectionObserver' in window)) {
+                    return;
+                }
+                
+                try {
+                    self.observer = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (entry.isIntersecting) {
+                                self.applyImage(entry.target);
+                            }
+                        });
+                    }, {
+                        rootMargin: self.settings.rootMargin,
+                        threshold: [self.settings.threshold]
+                    });
+
+                    self.images.forEach(function(image) {
+                        self.observer.observe(image);
+                    });
+                } catch (e) {
+                    console.info(e);
+                }
+            };
+
+            this.init();
+        }
+
+        window.lazyLoad = function() {
+            return new LazyLoad();
+        };
+    })();
+
+    document.addEventListener('DOMContentLoaded', function() {
+        lazyLoad();
+    });
+    document.body.addEventListener('contentUpdated', function() {
+        lazyLoad();
+    });
+    document.body.addEventListener('contentUpdated.oxlazy', function() {
+        lazyLoad();
+    });
+    if (typeof require !== 'undefined') {
+        require(['jquery'], function ($) {
+            $(document.body).on('contentUpdated contentUpdated.oxlazy', lazyLoad)
+        })
+    }
+</script>

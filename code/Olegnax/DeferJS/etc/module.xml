@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author      Olegnax
+ * @package     Olegnax_DeferJS
+ * @copyright   Copyright (c) 2019 Olegnax (http://olegnax.com/). All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+	<module name="Olegnax_DeferJS" setup_version="1.0.1.3">
+		<sequence>
+			<module name="Olegnax_Core"/>
+		</sequence>
+	</module>
+</config>

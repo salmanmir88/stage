@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_submit_all_after">
+        <observer name="update_main_status_after_order_place"
+            instance="Kpopia\Filter\Observer\UpdateMainStatus" />
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="update_main_status_after_order_save"
+            instance="Kpopia\Filter\Observer\UpdateMainStatus" />
+    </event>
+</config>

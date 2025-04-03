@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/config.xsd">
+    <default>
+        <catalog>
+            <frontend>
+                <default_sort_by>newest_first</default_sort_by>
+            </frontend>
+        </catalog>
+    </default>
+</config>

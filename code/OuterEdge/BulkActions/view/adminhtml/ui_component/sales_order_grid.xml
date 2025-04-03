@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions" class="OuterEdge\BulkActions\Ui\Component\Action\AddParams">
+            <action name="ship_and_notify">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">ship_and_notify</item>
+                        <item name="label" xsi:type="string" translate="true">Ship (notify customer)</item>
+                        <item name="url" xsi:type="url" path="shipbulkactions/order/massordership/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">Ship (notify customer)</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in Ship order?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="ship_and_dont_notify">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">ship_and_dont_notify</item>
+                        <item name="label" xsi:type="string" translate="true">Ship (don't notify customer)</item>
+                        <item name="url" xsi:type="url" path="shipbulkactions/order/massordership/"/>
+                        <item name="confirm" xsi:type="array">
+                          <item name="title" xsi:type="string">Ship (don't notify customer)</item>
+                          <item name="message" xsi:type="string" translate="true">Are you sure you wan't to selected orders in Ship order?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+</listing>

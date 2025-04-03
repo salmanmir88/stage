@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Xigen_CsvUpload::csv" title="KPOP SPECIAL PRICE RULE" module="Xigen_CsvUpload" sortOrder="25" resource="Xigen_CsvUpload::csv" parent="Magento_Backend::marketing"/>
+        <add action="xigen_csvupload/index/submit" id="Xigen_CsvUpload::index_submit" module="Xigen_CsvUpload" parent="Xigen_CsvUpload::csv" resource="Xigen_CsvUpload::index_submit" sortOrder="10" title="Special Price Rule Upload"/>
+        <add action="xigen_csvupload/csv/index" id="Xigen_CsvUpload::xigen_csvupload_csv" module="Xigen_CsvUpload" parent="Xigen_CsvUpload::csv" resource="Xigen_CsvUpload::xigen_csvupload_csv" sortOrder="20" title="Special Price Rules"/>
+        <add action="xigen_csvupload/export/index" id="Xigen_CsvUpload::xigen_csvexport_csv" module="Xigen_CsvUpload" parent="Xigen_CsvUpload::csv" resource="Xigen_CsvUpload::xigen_csvexport_csv" sortOrder="30" title="Export Sku by Barcode"/>
+    </menu>
+</config>

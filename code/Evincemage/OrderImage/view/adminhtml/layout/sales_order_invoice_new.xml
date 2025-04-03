@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_item_price"/>
+    <head>
+        <link src="Magento_Sales::js/bootstrap/order-post-action.js"/>
+    </head>
+    <body>
+        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" /> <!-- ToDo UI: remove this wrapper with old styles removal. The class name "admin__old" is for tests only, we shouldn't use it in any way -->
+
+        <referenceContainer name="content">
+        	<referenceBlock name="sales_invoice_create">
+        		<referenceBlock name="form">
+        			<referenceBlock name="order_items" template="Evincemage_OrderImage::order/invoice/create/items.phtml">
+        				<referenceBlock name="order_items.default" template="Evincemage_OrderImage::order/invoice/create/items/renderer/default.phtml"/>
+        				<block class="Magento\Sales\Block\Adminhtml\Items\Column\Name" name="column_image" template="Evincemage_OrderImage::items/column/image.phtml" group="column"/>
+        			</referenceBlock>
+        		</referenceBlock>
+        	</referenceBlock>
+        </referenceContainer>
+    </body>
+</page>     		

@@ -1,0 +1,22 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="customwork" sortOrder="999" translate="label">
+            <label>Order status sort</label>
+        </tab>
+        <section id="customwork" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+            <label>Order status sort</label>
+            <tab>customwork</tab>
+            <resource>Dakha_CustomWork::config_dakha_customwork</resource>
+            <group id="general" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label">
+                <label>General</label>
+                <field id="order_status" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10" translate="label" type="select">
+                    <label>Order status</label>
+                    <comment/>
+                    <frontend_model>Dakha\CustomWork\Block\Adminhtml\Form\Field\OrderStatus</frontend_model>
+                    <backend_model>Dakha\CustomWork\Model\System\Config\Backend\OrderStatus</backend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

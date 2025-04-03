@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Evince_CourierManager::manager" title="Courier Manager" module="Evince_CourierManager" sortOrder="10" resource="Evince_CourierManager::manager" />
+        <add id="Evince_CourierManager::add_row" title="City Manager" module="Evince_CourierManager" sortOrder="20" parent="Evince_CourierManager::manager" action="grid/grid" resource="Evince_CourierManager::add_row"/>
+    </menu>
+</config>

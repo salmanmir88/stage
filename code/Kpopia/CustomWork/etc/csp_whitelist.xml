@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <!-- script-src policy -->
+        <policy id="script-src">
+            <values>
+                <value id="facebook-connect" type="host">https://connect.facebook.net</value>
+                <value id="google-analytics" type="host">https://www.googletagmanager.com</value>
+                <value id="google-analytics-script" type="host">https://www.google-analytics.com</value>
+                <value id="google-apis" type="host">https://*.googleapis.com</value>
+                <value id="clarity-ms" type="host">https://c.clarity.ms</value>
+                <value id="klaviyo" type="host">https://static.klaviyo.com</value>
+                <value id="klaviyo-tracking" type="host">https://static-tracking.klaviyo.com</value>
+                <value id="paypal" type="host">https://www.paypal.com</value>
+                <value id="paypal-checkout" type="host">https://checkout.paypal.com</value>
+                <value id="stape" type="host">https://yntwucrg.me.stape.io</value>
+                <value id="bing" type="host">https://c.bing.com</value>
+                <value id="addthis" type="host">https://*.addthis.com</value>
+                <value id="google-ads" type="host">https://googleads.g.doubleclick.net</value>
+                <!-- Allow script from sgtm.kpopiashop.com -->
+                <value id="sgtm" type="host">https://sgtm.kpopiashop.com</value>
+            </values>
+        </policy>
+
+        <!-- img-src policy -->
+        <policy id="img-src">
+            <values>
+                <value id="bing-images" type="host">https://c.bing.com</value>
+                <value id="facebook-images" type="host">https://www.facebook.com</value>
+                <value id="facebook-connect-img" type="host">https://connect.facebook.net</value>
+                <value id="clarity.ms" type="host">https://c.clarity.ms</value>
+                <value id="google.co.in" type="host">https://www.google.co.in</value>
+                <value id="stape.io" type="host">https://yntwucrg.me.stape.io</value>
+                <value id="google-analytics" type="host">https://www.google-analytics.com</value>
+                <value id="google-apis" type="host">https://*.googleapis.com</value>
+                <value id="youtube" type="host">https://*.youtube.com</value>
+                <value id="paypal" type="host">https://www.paypal.com</value>
+                <value id="paypal-images" type="host">https://www.paypalobjects.com</value>
+                <value id="klaviyo-images" type="host">https://static.klaviyo.com</value>
+                <value id="cloudfront" type="host">https://d3k81ch9hvuctc.cloudfront.net</value>
+                <!-- Allow images from sgtm.kpopiashop.com -->
+                <value id="sgtm-images" type="host">https://sgtm.kpopiashop.com</value>
+                <value id="google-doubleclick-images" type="host">https://stats.g.doubleclick.net</value>
+                <value id="twitter-analytics-img" type="host">https://t.co</value>
+                <value id="twitter-analytics" type="host">https://analytics.twitter.com</value>
+            </values>
+        </policy>
+
+        <!-- style-src policy -->
+        <policy id="style-src">
+            <values>
+                <value id="maxcdn-fontawesome" type="host">https://maxcdn.bootstrapcdn.com</value>
+                <value id="google-fonts" type="host">https://fonts.googleapis.com</value>
+            </values>
+        </policy>
+
+        <!-- font-src policy -->
+        <policy id="font-src">
+            <values>
+                <value id="maxcdn-fonts" type="host">https://maxcdn.bootstrapcdn.com</value>
+                <value id="google-fonts" type="host">https://fonts.gstatic.com</value>
+                <value id="static.klaviyo.com" type="host">https://static.klaviyo.com</value>
+            </values>
+        </policy>
+
+        <!-- connect-src policy (allowing WebSocket to localhost during development) -->
+        <policy id="connect-src">
+            <values>
+                <value id="google-analytics" type="host">https://www.google-analytics.com</value>
+                <value id="google-apis" type="host">https://*.googleapis.com</value>
+                <value id="paypal" type="host">https://www.paypal.com</value>
+                <value id="paypal-checkout" type="host">https://checkout.paypal.com</value>
+                <value id="klaviyo" type="host">https://*.klaviyo.com</value>
+                <value id="stape" type="host">https://yntwucrg.me.stape.io</value>
+                <value id="bing" type="host">https://c.bing.com</value>
+                <value id="localhost" type="host">ws://localhost:12387</value> <!-- Allowing
+                WebSocket to localhost during dev -->
+                <value id="addthis" type="host">https://*.addthis.com</value>
+                <value id="cloudflare" type="host">*.cloudflare.com</value>
+                <value id="googleapis" type="host">*.googleapis.com</value>
+                <value id="paypal" type="host">*.paypal.com</value>
+                <!-- Allow connect to sgtm.kpopiashop.com -->
+                <value id="sgtm-connect" type="host">https://sgtm.kpopiashop.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

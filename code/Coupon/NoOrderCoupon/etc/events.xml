@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="salesrule_validator_process">
+        <observer name="restrict_coupon_for_existing_customers" instance="Coupon\NoOrderCoupon\Observer\RestrictCouponUsage"/>
+    </event>
+</config>

@@ -1,0 +1,165 @@
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <listingToolbar name="listing_top">
+        <filters name="listing_filters">
+            <filterSelect name="status" provider="${ $.parentName }"
+                component="Magento_Ui/js/form/element/ui-select"
+                template="ui/grid/filters/elements/ui-select">
+                <settings>
+                    <options class="Dakha\OrderGridAddAnchor\Model\Config\Source\Order\Status" />
+                    <caption translate="true">Select</caption>
+                    <label translate="true">Status</label>
+                    <dataScope>status</dataScope>
+                    <imports>
+                        <link name="visible">componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+        </filters>
+    </listingToolbar>
+    <columns name="sales_order_columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">false</item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="street">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Street</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <visible>true</visible>
+            </settings>
+        </column>
+        <column name="postcode">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Zip</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <visible>true</visible>
+            </settings>
+        </column>
+        <column name="city">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">City</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <visible>true</visible>
+            </settings>
+        </column>
+        <column name="country_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Country</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <visible>true</visible>
+            </settings>
+        </column>
+        <column name="telephone"
+            class="Dakha\OrderGridAddAnchor\Ui\Component\Listing\Column\TelephoneColumn">
+            <settings>
+                <visible>true</visible>
+                <dataType>text</dataType>
+                <label translate="true">Telephone</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>true</sortable>
+                <filter>text</filter>
+            </settings>
+        </column>
+        <column name="status">
+            <settings>
+                <filter>multiselect</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="increment_id"
+            class="Dakha\OrderGridAddAnchor\Ui\Component\Listing\Column\OrderAnchor">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="billing_name"
+            class="Dakha\OrderGridAddAnchor\Ui\Component\Listing\Column\BillNameAnchor">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Bill-to Name</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="customer_email"
+            class="Dakha\OrderGridAddAnchor\Ui\Component\Listing\Column\Multitime">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Customer email</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="product_common_code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Product common code</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="align" xsi:type="string">right</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+        <column name="last_updated_at" class="Magento\Ui\Component\Listing\Columns\Date"
+            component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <sortable>true</sortable>
+                <dataType>date</dataType>
+                <label translate="true">Last Updated At</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="invoice_date" class="Magento\Ui\Component\Listing\Columns\Date"
+            component="Magento_Ui/js/grid/columns/date">
+            <settings>
+            <filter>dateRange</filter>
+                <sortable>true</sortable>
+                <dataType>date</dataType>
+                <label translate="true">Invoice Date</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="shipment_date" class="Magento\Ui\Component\Listing\Columns\Date"
+            component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <sortable>true</sortable>
+                <dataType>date</dataType>
+                <label translate="true">Shipment Date</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="category_id" class="MarkShust\OrderGrid\Ui\Component\Listing\Column\Category">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">
+                    Meetanshi\GridColumn\Model\Category\Categorylist</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Categories</item>
+                    <item name="sortOrder" xsi:type="number">75</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

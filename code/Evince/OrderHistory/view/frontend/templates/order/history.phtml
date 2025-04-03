@@ -1,0 +1,96 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var \Magento\Sales\Block\Order\History $block */
+?>
+<?php $_orders = $block->getOrders(); ?>
+<?= $block->getChildHtml('info') ?>
+<?php 
+$orderHistoryHelper = $this->helper('Evince\OrderHistory\Helper\Data');
+$priceHelper = $this->helper('Magento\Framework\Pricing\Helper\Data');         
+?>
+
+<?php if ($_orders && count($_orders)) : ?>
+    <div class="table-wrapper orders-history">
+        
+            <?php foreach ($_orders as $_order): ?>
+            <a href="<?php echo $this->getUrl('ordertrack',array('search'=>$_order->getIncrementId()))?>" class="action view">    
+            <div class="order-history-content">
+                <div class="order-history-status">
+                    <div class="current-order-status <?= $block->escapeHtml('Order track') ?>" style="color: #0000FF;"><?php echo __('Order track') ?></div>
+                    <div class="order-number"><?= $block->escapeHtml('Order# '.$_order->getRealOrderId()) ?></div>
+                    <?php /*<div class="order-deliver-date">
+                        <?= $block->escapeHtml('Expected Delivery Date: ') ?><?php echo $orderHistoryHelper->getExpectedDeliveryDate($_order->getCreatedAt()); ?>
+                    </div>*/ ?>
+                </div>
+                
+                    <?php 
+                    $items = $_order->getAllVisibleItems();
+                    foreach ($items as $item) { ?>
+                        <div class="orders-history-main">
+                            <div class="order-history-item-main">
+                        <div class="order-item-img">
+                            <?php $productImg = $orderHistoryHelper->getOrderItemImage($item->getProductId()); ?>
+                            <?php 
+                            $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); 
+                            $store = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore();
+                            $imageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $productImg->getData('image');
+                            ?>
+                            <img src="<?php echo $imageUrl; ?>" height="200" width="200" />
+                        </div>
+                        <div class="name-option-price-container">
+                        <div class="order-item-name">
+                            <?php echo $item->getName(); ?>
+                        </div>    
+                   <?php $options = $item->getProductOptions();        
+                         if (isset($options['options']) && !empty($options['options'])) { ?>
+                            <div class="order-item-option">
+                                     <dl class="item-options">
+                               <?php foreach ($options['options'] as $option) { ?>
+                                     <dt><?php echo $option['label']; ?></dt>
+                                     <dd><?php echo $option['option_value']; ?></dd>
+                           <?php } ?>
+                                     </dl>
+                            </div>
+                         <?php } ?>
+                         <div class="order-item-price">
+                            <?php echo $priceHelper->currency($item->getPrice(), true, false);  ?>
+                        </div>
+                    </div>
+                    <div class="order-details-wrapper">
+                    <div class="order-place-date">
+                        <span class="detail-label"><?php echo __('Placed ') ?></span>
+                        <?php echo $orderHistoryHelper->getFormatDate($_order->getCreatedAt()) ?>
+                    </div> 
+                    <div class="order-total">
+                        <span class="detail-label"><?php echo __('Total ') ?></span>
+                        <?= /* @noEscape */ $_order->formatPrice($_order->getGrandTotal()) ?>
+                    </div>
+                    <div class="ship-to">
+                        <span class="detail-label"><?php echo __('Ship to ') ?></span>
+                        <?= $_order->getShippingAddress() ? $block->escapeHtml($_order->getShippingAddress()->getName()) : '&nbsp;' ?>
+                    </div>
+                    </div>
+                    </div>
+                </div>
+               <?php } ?>
+                    
+                   
+                
+            </div>
+            </a>
+             <br />
+            <?php endforeach; ?>
+        
+    </div>
+    <?php if ($block->getPagerHtml()) : ?>
+        <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?= $block->escapeHtml(__('You have placed no orders.')) ?></span></div>
+<?php endif ?>

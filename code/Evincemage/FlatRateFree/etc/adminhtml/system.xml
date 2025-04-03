@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="flatrate" translate="label" sortOrder="10">
+            <label>FlatRate Free Shipping</label>
+        </tab>
+        <section id="flatshipping" translate="label" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Flat Rate Free</label>
+            <tab>flatrate</tab>
+            <resource>Evincemage_FlatRateFree::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Configuration</label>
+                <field id="threshold" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Minimum Cart Subtotal Value</label>
+                    <comment>The Free shipping will be enabled if cart subtotal is equals to or greater than value provided.To disable Free shipping provide value as 0</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,27 @@
+html, body {
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+/** this css use only quick view **/
+.prodoct-details {
+	padding-bottom: 0px;
+}
+.prodoct-details-box {
+	padding-bottom: 0px;
+}
+.column-center {
+	-ms-flex: 0 0 100%;
+	flex: 0 0 100%;
+	max-width: 100%;
+}
+.column-left {
+	display: none;
+}
+.column-right {
+	display: none;
+}
+.prodoct-details .container {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+/** this css use only quick view **/

@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+    <css src="Developerswing_OrderTracking/css/track.css" />		
+	</head>
+	<body>
+		<referenceContainer name="content">
+			<block name="index.index" class="Developerswing\OrderTracking\Block\Index\Index" template="Developerswing_OrderTracking::index/index.phtml"/>
+		</referenceContainer>
+	</body>
+</page>

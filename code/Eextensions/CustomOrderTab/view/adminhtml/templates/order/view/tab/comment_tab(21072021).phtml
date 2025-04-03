@@ -1,0 +1,69 @@
+<?php
+/**
+* @var $block \Eextensions\CustomOrderTab\Block\Adminhtml\Order\View\Tab\CommentTab
+*/
+?>
+
+<form  action="<?php // echo $block->getPostUrl() ; ?>" name="feedback_form" id="dealer-form" class="comment_form"  method="post"  
+		data-hasrequired="<?php echo __('* Required Fields') ?>"     
+		data-mage-init='{"validation":{}}' enctype="multipart/form-data" 
+		data-role="comment_form" data-bind="scope: 'comment_form'"
+		autocomplete="off" novalidate >
+	<input name="form_key" type="hidden" value="<?php // echo $FormKey->getFormKey(); ?>">
+	<div class="form-cotnt">
+		<div class="block-title"><strong><?php echo __('Add Order Comment'); ?></strong></div>
+		<div class="fieldset comment-fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+			<input type="hidden" name="order_id" class="form-control inputbox_control" placeholder="<?php echo __('Order Id'); ?>" data-validate="{required:true}" value="2" readonly="true">
+			 
+			<div class="comment required">
+				<div class="form-group control">
+					<?php /* <label class="control-label" for="inputNormal"><?php echo __('Feedback'); ?><span>*</span></label> */ ?>
+					<textarea class="form-control inputbox_control" rows="5" cols="80"  placeholder="<?php echo __('Add Comment'); ?>" data-validate="{required:true}" type="text" name="comment"></textarea>
+				</div>
+			 </div>
+		</div>
+	</div>
+	<div class="actions-toolbar" style="margin-top: 15px;">
+		<div class="primary">
+			<button type="submit" title="<?php echo __('Submit') ?>" class="action submit primary btn-default">
+				<span><?php echo __('Submit') ?></span>
+			</button>
+		</div>
+	</div>
+</form>
+
+<div class="fieldset-wrapper order-information" style="width: 100%;">
+   <div class="fieldset-wrapper-title">
+       <span class="title"><?php /* @escapeNotVerified */
+           echo __('Comments for this Order') ?></span>
+   </div>
+   <table class="admin__table-secondary" width="100%">
+       <tbody>
+       <?php echo $block->getChildHtml(); ?>
+       <tr>
+           <th><?php echo __('Sr No.') ?></th>
+           <th><?php echo __('Email') ?></th>
+           <th><?php echo __('Comment') ?></th>
+           <th><?php echo __('Date') ?></th>
+       </tr>
+       <tr>
+           <td>3</td>
+           <td><?php echo __('71smith.john@gmail.com'); ?></td>
+           <th><?php echo __('Comment here') ?></th>
+           <td><?php echo __('Jun 16, 2021, 5:08:47 AM') ?></td>
+       </tr>
+	   <tr>
+           <td>2</td>
+           <td><?php echo __('71smith.john@gmail.com'); ?></td>
+           <th><?php echo __('Comment here') ?></th>
+           <td><?php echo __('Jun 16, 2021, 5:08:47 AM') ?></td>
+       </tr>
+	   <tr>
+           <td>1</td>
+           <td><?php echo __('17smith.john@gmail.com'); ?></td>
+           <th><?php echo __('Comment here') ?></th>
+           <td><?php echo __('Jun 16, 2021, 5:08:47 AM') ?></td>
+       </tr>
+       </tbody>
+   </table>
+</div>

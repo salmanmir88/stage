@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_invoice_item_price"/>
+    <body>
+        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" />
+        <referenceContainer name="content">
+        	<referenceBlock name="sales_invoice_view">
+        		<referenceBlock name="invoice_items" template="Evincemage_OrderImage::order/invoice/view/items.phtml">
+        			<referenceBlock name="invoice_items.default" template="Evincemage_OrderImage::order/invoice/view/items/renderer/default.phtml"/>
+        			<block class="Magento\Sales\Block\Adminhtml\Items\Column\Name" name="column_image" template="Evincemage_OrderImage::items/column/image.phtml" group="column" after="invoice_items.default"/>
+        		</referenceBlock>
+        	</referenceBlock>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,27 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author      Olegnax
+ * @package     Olegnax_DeferJS
+ * @copyright   Copyright (c) 2021 Olegnax (http://olegnax.com/). All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<ox_deferjs>
+			<general>
+				<enable>1</enable>
+				<combine_inline>1</combine_inline>
+				<combine_magentoinit>1</combine_magentoinit>
+			</general>
+			<excludes>
+				<exclude_homepage/>
+				<exclude_action/>
+				<exclude_path/>
+				<show_action_path>0</show_action_path>
+			</excludes>
+		</ox_deferjs>
+	</default>
+</config>

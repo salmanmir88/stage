@@ -1,0 +1,35 @@
+<?php $scriptString = <<<script
+require(["jquery"], function ($) {
+    "use strict";
+    $(function () {
+        const ox_bnav = document.getElementById("ox_bnav");
+        let heightCalculated = false;
+        if (ox_bnav) {
+            function init(){
+                $(window).one('scroll', handleScroll);
+            }
+            init();
+            $(window).on('resize', function () {
+                heightCalculated = false;
+                init();
+            });
+            function updateBnavHeight() {
+                if (!heightCalculated) {
+                    document.documentElement.style.setProperty('--ox-bnav-height', ox_bnav.offsetHeight + 'px');
+                    heightCalculated = true;
+                    $(window).off('scroll', handleScroll);
+                }
+            }
+            function handleScroll() {
+                updateBnavHeight();
+            }
+        }
+    });
+});
+script;
+if (isset($secureRenderer)){
+	echo /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false);
+} else{
+	echo /* @noEscape */ '<script>' .  $scriptString . '</script>';
+}
+?>	

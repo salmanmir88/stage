@@ -1,0 +1,49 @@
+<?php
+/**
+ * BSS Commerce Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://bsscommerce.com/Bss-Commerce-License.txt
+ *
+ * @category   BSS
+ * @package    Bss_OrderImportExport
+ * @author     Extension Team
+ * @copyright  Copyright (c) 2020 BSS Commerce Co. ( http://bsscommerce.com )
+ * @license    http://bsscommerce.com/Bss-Commerce-License.txt
+ */
+
+//  @codingStandardsIgnoreFile
+
+?>
+
+<?php /** @var  $block \Magento\Framework\View\Element\Template */?>
+<script type="text/javascript">
+    require(['jquery', 'mage/translate'], function ($) {
+        $(document).ready(function () {
+            $("<a>").attr({
+                id: "bss_order_sample_link",
+                target: "_blank",
+                href: "https://wiki.bsscommerce.com/docs/magento-2-administration-extension/magento-2-import-export-orders/sample-data/ "
+            }).html(
+                $.mage.__('View sample data')
+            ).appendTo(
+                $('#sample-file-span')
+            );
+
+            $('select#entity').change(function (event) {
+                var entity = event.currentTarget.value;
+                if (entity == "bss_order") {
+                    $('#bss_order_sample_link').show();
+                    $('#sample-file-span #sample-file-link').hide();
+                } else {
+                    $('#bss_order_sample_link').hide();
+                    $('#sample-file-span #sample-file-link').show();
+                }
+            })
+        });
+    });
+</script>

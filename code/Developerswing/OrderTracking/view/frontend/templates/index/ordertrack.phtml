@@ -1,0 +1,606 @@
+<style>
+	.pure-table-bordered thead {
+		z-index: 1;
+		position: relative;
+	}
+
+	.track-mt-20.scroll-box {
+		border: 1px solid #c7c4c4;
+		scrollbar-color: #036296 #c7c4c4;
+	}
+
+	thead th {
+		position: sticky;
+		top: 0;
+	}
+
+	th {
+		background: #0077d3;
+		color: white
+	}
+
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	.pure-table-bordered {
+		height: 100% !important;
+		width: 100%;
+		overflow: scroll;
+	}
+
+	.pure-table-bordered thead tr th {
+		width: 100% !important;
+	}
+
+	.image-container .product-image img {
+		border-radius: 50%;
+		width: 100%;
+		display: block;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	@media only screen and (min-device-width: 481px) and (max-device-width: 1024px) {
+
+		.prodict-itam-track {
+			display: grid !important;
+		}
+
+		.prodict-itam-track .col-sm-6 {
+			max-width: 100% !important;
+		}
+	}
+
+	@media only screen and (max-device-width: 480px) {
+		.scroll-box table.pure-table.pure-table-bordered {
+			min-width: 100%;
+		}
+
+		.pure-table-bordered tr {
+			display: flex !important;
+		}
+	}
+
+	.pure-table-bordered td.update {
+		width: 24%;
+	}
+
+	.pure-table-bordered td.message {
+		width: 76%;
+	}
+</style>
+<?php
+$orderInfo = $block->getOrderSearch();
+$order = $block->getOrderSearch();
+$isPending = false;
+$isProcessing = false;
+$onlyPreorderItem = false;
+$somePreorderItem = false;
+$noPreorderItem = false;
+$hadSomePreorderItem = false;
+$hadOnlyPreorderItem = false;
+$isEligibleForStoreCredit = false;
+$isShipped = false;
+$isReturned = false;
+$isOnHold = false;
+$isCanceled = false;
+$isWaitingForConfirmation = false;
+$isCompleted = false;
+$hasTrackingLink = false;
+$invoiceDate = $block->getOrderInvoiceDate($orderInfo->getId());
+$shipmentDate = $block->getShipmentDate($orderInfo->getId());
+$trackLink = $block->getTrackingNumberFrom($orderInfo);
+$onlyPreorderItemBlock = $block->getOnlyPreorderItem($orderInfo->getId());
+$noPreorderItemBlock = $block->getNoPreorderItem($orderInfo->getId());
+$somePreorderItemBlock = $block->getSomePreorderItem($orderInfo->getId());
+$hadSomePreorderItemBlock = $block->getHadSomePreorderItems($orderInfo->getId());
+$hadOnlyPreorderItemBlock = $block->getHadOnlyPreorderItems($orderInfo->getId());
+$mainOrderStatus = $block->getMainOrderStatus($order->getStatus());
+
+if (!$mainOrderStatus) {
+	$mainOrderStatus = $order->getState();
+}
+if ($mainOrderStatus == 'new') {
+	$isPending = true;
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+}
+if (($mainOrderStatus == 'processing')) {
+	$isPending = true;
+	$isProcessing = true;
+	if ($onlyPreorderItemBlock) {
+		$onlyPreorderItem = true;
+	}
+	if ($noPreorderItemBlock) {
+		$noPreorderItem = true;
+	}
+	if ($somePreorderItemBlock) {
+		$somePreorderItem = true;
+	}
+	if ($hadSomePreorderItemBlock) {
+		$hadSomePreorderItem = true;
+	}
+	if ($hadOnlyPreorderItemBlock) {
+		$hadOnlyPreorderItem = true;
+	}
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+}
+
+// if (($mainOrderStatus == 'processing') && $block->getNoPreorderItem($orderInfo->getId()) && $block->getEligibleForStoreCredit($orderInfo->getId())) {
+// 	$isPending = true;
+// 	$isProcessing = true;
+// 	$noPreorderItem = true;
+// 	$isEligibleForStoreCredit = true;
+// 	if($trackLink){
+// 		$hasTrackingLink = true;
+// 	}
+// }
+if ($mainOrderStatus == 'complete') {
+	$isPending = true;
+	$isProcessing = true;
+	$isShipped = true;
+	if ($onlyPreorderItemBlock) {
+		$onlyPreorderItem = true;
+	}
+	if ($noPreorderItemBlock) {
+		$noPreorderItem = true;
+	}
+	if ($somePreorderItemBlock) {
+		$somePreorderItem = true;
+	}
+	if ($hadSomePreorderItemBlock) {
+		$hadSomePreorderItem = true;
+	}
+	if ($hadOnlyPreorderItemBlock) {
+		$hadOnlyPreorderItem = true;
+	}
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+}
+if ($mainOrderStatus == 'closed') {
+	$isPending = true;
+	if ($order->getInvoice()) {
+		$isProcessing = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+	if ($order->getShipment()) {
+		$isShipped = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+	$isReturned = true;
+}
+if ($mainOrderStatus == 'canceled') {
+	$isPending = true;
+	if ($order->getInvoice()) {
+		$isProcessing = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+	if ($order->getShipment()) {
+		$isShipped = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+	$isCanceled = true;
+}
+if ($mainOrderStatus == 'holded') {
+	$isPending = true;
+	if ($order->getInvoice()) {
+		$isProcessing = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+	if ($order->getShipment()) {
+		$isShipped = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+	$isOnHold = true;
+}
+if ($mainOrderStatus == 'pending_payment') {
+	$isPending = true;
+	if ($order->getInvoice()) {
+		$isProcessing = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+	if ($order->getShipment()) {
+		$isShipped = true;
+		if ($onlyPreorderItemBlock) {
+			$onlyPreorderItem = true;
+		}
+		if ($noPreorderItemBlock) {
+			$noPreorderItem = true;
+		}
+		if ($somePreorderItemBlock) {
+			$somePreorderItem = true;
+		}
+		if ($hadSomePreorderItemBlock) {
+			$hadSomePreorderItem = true;
+		}
+		if ($hadOnlyPreorderItemBlock) {
+			$hadOnlyPreorderItem = true;
+		}
+	}
+
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+	$isWaitingForConfirmation = true;
+}
+if ($mainOrderStatus == 'shipment') {
+	$isPending = true;
+
+	if ($order->getInvoice()) {
+		$isProcessing = true;
+	}
+	if ($order->getShipment()) {
+		$isShipped = true;
+	}
+	if ($onlyPreorderItemBlock) {
+		$onlyPreorderItem = true;
+	}
+	if ($noPreorderItemBlock) {
+		$noPreorderItem = true;
+	}
+	if ($somePreorderItemBlock) {
+		$somePreorderItem = true;
+	}
+	if ($hadSomePreorderItemBlock) {
+		$hadSomePreorderItem = true;
+	}
+	if ($hadOnlyPreorderItemBlock) {
+		$hadOnlyPreorderItem = true;
+	}
+	if ($trackLink) {
+		$hasTrackingLink = true;
+	}
+	$isProcessing = true;
+	$isShipped = true;
+	$isCompleted = true;
+}
+
+
+?>
+
+<section>
+	<div class="container-search-box">
+		<div class="prodict-itam-track">
+			<div class="order-tracker">
+
+				<?php if ($isWaitingForConfirmation || $isOnHold || $isCanceled || $isReturned) { ?>
+
+					<div class="step active-cancel">
+						<div class="icon">
+							<img src="<?php echo $block->getMediaUrl() . "danger.svg" ?>">
+						</div>
+						<span>Order Created</span>
+					</div>
+				<?php } else { ?>
+					<div class="step active">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "box-add.svg" ?>">
+						</div>
+						<span>Order Created</span>
+					</div><?php } ?>
+				<?php if ($isProcessing) { ?>
+					<div class="step active">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "3d-rotate.svg"
+										?>"></div>
+						<span>In Processing</span>
+					</div>
+				<?php } else { ?>
+					<div class="step">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "3d-rotate.svg"
+										?>"></div>
+						<span>In Processing</span>
+					</div>
+				<?php } ?>
+				<?php if ($isShipped) { ?>
+					<div class="step active">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "group.svg" ?>"></div>
+						<span>With Courier</span>
+					</div>
+				<?php } else { ?>
+					<div class="step">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "3d-rotate.svg"
+										?>"></div>
+						<span>With Courier</span>
+					</div>
+				<?php } ?>
+				<?php if ($isCompleted) { ?>
+					<div class="step active">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "box-tick.svg"
+										?>"></div>
+						<span>Delivered</span>
+					</div>
+				<?php } else { ?>
+					<div class="step">
+						<div class="icon"><img
+								src="<?php echo $block->getMediaUrl() . "3d-rotate.svg"
+										?>"></div>
+						<span>Delivered</span>
+					</div>
+				<?php } ?>
+			</div>
+			<div class="prodict-itam-track col-sm-12 d-flex">
+				<div class="col-sm-6">
+					<div class="track-mt-20 scroll-box">
+						<table class="pure-table pure-table-bordered">
+							<thead>
+								<tr>
+									<th colspan="2"><?php echo __('Shipping details') ?></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php if ($hasTrackingLink) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($shipmentDate)); ?></td>
+										<td class="order-tracking-link message"><?php echo __('You can track your shipment using the following link: ') ?><a href="<?= $block->escapeUrl($trackLink) ?>" target="_blank"><?= $block->escapeHtml($trackLink) ?></a></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isCompleted) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($shipmentDate)); ?></td>
+										<td class="message"><?php echo __('Thank you! We are glad you received your order safely. Could you share your experience with us? Share a photo of your new products on your Instagram story and tag us @kpopiashop. We will repost your photo with all our followers. Thank you again.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isOnHold) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We need your help! Your order is on hold. Please contact us on WhatsApp at [+966570001626] or by email at [team@kpopiashop.com] to confirm your order details and complete the process.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isCanceled) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We apologize for the cancellation of your order. If there has been any mistake, please contact us at [team@kpopiashop.com].') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isWaitingForConfirmation) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We need your help! Your order is on hold. Please contact us on WhatsApp at [+966570001626] or by email at [team@kpopiashop.com] to confirm your order details and complete the process.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isReturned) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We are sorry to inform you that your order has been returned to us. Please note that we have attempted to deliver your order multiple times, but unfortunately, it was not received. If you would like to reorder, please contact us at [team@kpopiashop.com] for more details.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isShipped) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($shipmentDate)); ?></td>
+										<td class="message"><?php echo __('We would like to inform you that your order has left our warehouse and is now on its way to you. We expect your order to arrive within 3-5 business days.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if (($noPreorderItem && $hadSomePreorderItem) || ($noPreorderItem && $hadOnlyPreorderItem)) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($shipmentDate)); ?></td>
+										<td class="message"><?php echo __('We are currently processing your order with great care. Please note that the shipping process may take between two and three weeks. We will send you another email once the shipment leaves with the delivery person. If you have any questions, please do not hesitate to contact us.') ?></td>
+									</tr>
+								<?php } elseif ($noPreorderItem &&  ($invoiceDate || $shipmentDate)) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($invoiceDate)); ?></td>
+										<td class="message"><?php echo __('We are currently processing your order with great care. Please note that the shipping process may take between two and three weeks. We will send you another email once the shipment leaves with the delivery person. If you have any questions, please do not hesitate to contact us.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($somePreorderItem || $hadSomePreorderItem) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($invoiceDate)); ?></td>
+										<td class="message"><?php echo __('We are pleased to inform you that all items in your order will be shipped together. Thank you for your patience and understanding.') ?></td>
+									</tr>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We appreciate your enthusiasm for this special album. Please note that this album has not been released by the manufacturer yet. We will ship your order as soon as it is released. We will send you another email once the shipment arrives with the delivery person, which we expect to be within two to three weeks after the release date.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($onlyPreorderItem || $hadOnlyPreorderItem) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We appreciate your enthusiasm for this special album. Please note that this album has not been released by the manufacturer yet. We will ship your order as soon as it is released. We will send you another email once the shipment arrives with the delivery person, which we expect to be within two to three weeks after the release date.') ?></td>
+									</tr>
+								<?php } ?>
+								<?php if ($isPending) { ?>
+									<tr>
+										<td class="update"><?php echo __('Order Updated') ?><br>
+											<?php echo date('d-M-Y', safe_strtotime($orderInfo->getCreatedAt())); ?></td>
+										<td class="message"><?php echo __('We are happy to receive your order! Our team is currently working on preparing your order. We will do our best to deliver it to you as soon as possible.') ?></td>
+									</tr>
+								<?php } ?>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-sm-6">
+					<div class="track-mt-20 scroll-box">
+						<table class="pure-table pure-table-bordered">
+							<thead>
+								<tr>
+									<th colspan="2"><?php echo __('Order Number:# ' . $orderInfo->getEntityId()) ?></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="prodict-itam-track">
+											<?php foreach ($orderInfo->getAllItems() as $_item): ?>
+												<?php $_product = $block->getProductById($_item->getProductId()); ?>
+												<div class="row">
+													<div class="col-md-2 col-sm-1 image-container">
+														<div class="product-image">
+															<img src="<?php echo $block->getProductImageUrl($_item->getProductId()); ?>" class="product-image-track circle-image">
+														</div>
+													</div>
+													<div class="col-md-10 col-sm-11 content-box-main">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="row">
+																	<div class="col-md-8">
+																		<span class="float-left mobile-margin "><b><?php echo $_item->getName() ?></b></span>
+																		<?php if ($_product) { ?>
+																			<span class="float-left release-date"><?php echo __('Release Date: ') . date('d/m/Y', safe_strtotime($_product->getReleaseDate())) ?></span>
+																		<?php } ?>
+																	</div>
+																	<div class="col-md-4 price">
+																		<span class="float-right"><b><?php echo __('SAR') . ' ' . $_item->getPrice(); ?></b></span>
+																		<span class="float-right"><?php echo __('Quantity: ') . $_item->getQtyOrdered(); ?></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											<?php endforeach; ?>
+										</div>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<?php
+function safe_strtotime($datetime)
+{
+	if (is_string($datetime) && !empty($datetime)) {
+		$timestamp = strtotime($datetime);
+		if ($timestamp !== false) {
+			return $timestamp;
+		}
+	}
+	return null; // or return false, or a default timestamp, as per your needs
+}
+?>

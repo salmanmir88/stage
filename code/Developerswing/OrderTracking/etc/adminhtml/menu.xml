@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Menu/etc/menu.xsd">
+    <menu>
+        <add id="Developerswing_OrderTracking::custom_menu"
+             title="Tracking Links"
+             module="Developerswing_OrderTracking"
+             sortOrder="120"
+             parent="Magento_Sales::sales_operation"
+             action="custommenu/tracking/index"
+             resource="Developerswing_OrderTracking::custom_menu"/>
+    </menu>
+</config>

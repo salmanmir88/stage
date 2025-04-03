@@ -1,0 +1,16 @@
+<?php
+/** @var \Developerswing\OrderTracking\Block\Adminhtml\Order\View\TrackingLink $block */
+$trackingLink = $block->getTrackingLink();
+?>
+
+<tr>
+    <th>Tracking Link</th>
+    <td>
+        <?php if ($trackingLink): ?>
+            <a href="<?= $block->escapeUrl($trackingLink) ?>" target="_blank"><?= $block->escapeHtml($trackingLink) ?></a>
+        <?php else: ?>
+            <span>No tracking link available.</span>
+        <?php endif; ?>
+    </td>
+</tr>
+

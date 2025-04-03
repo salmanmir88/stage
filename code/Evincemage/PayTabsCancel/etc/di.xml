@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<preference for="Magento\Sales\Model\Order\Payment\State\AuthorizeCommand" type="Evincemage\PayTabsCancel\Plugin\AuthorizeCommand" />
+<!-- <type name="Magento\Sales\Model\Order\Payment\State\AuthorizeCommand">
+	<plugin name="cancel_order_if_Payment" type="Evincemage\PayTabsCancel\Plugin\AuthorizeCommandPlugin" sortOrder="10"/>
+</type>	 -->
+</config>

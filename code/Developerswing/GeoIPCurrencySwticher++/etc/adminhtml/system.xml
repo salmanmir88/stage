@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="geoipcurrencyswticher" translate="label" sortOrder="999">
+			<label>KPOPIA SHOP IP CURRENCY SWITCHER</label>
+		</tab>
+		<section id="geoipcurrencyswticher" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>Option</label>
+			<tab>geoipcurrencyswticher</tab>
+			<resource>Developerswing_GeoIPCurrencySwticher::config_developerswing_geoipcurrencyswticher</resource>
+			<group id="option" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>option</label>
+				<field id="enable" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enable</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="apiurl" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Apiurl</label>
+					<comment/>
+				</field>
+				<field id="apikey" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Apikey</label>
+					<comment/>
+				</field>
+				<field id="currency" type="multiselect" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Currency</label>
+					<comment/>
+					<source_model>Developerswing\GeoIPCurrencySwticher\Model\Config\Source\Currency</source_model>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

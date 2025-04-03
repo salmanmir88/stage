@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<tab id="flatratepriceandmessage" translate="label" sortOrder="999">
+			<label>Flatrate price and message</label>
+		</tab>
+		<section id="flatratepriceandmessage" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<label>flatrate price and message</label>
+			<tab>flatratepriceandmessage</tab>
+			<resource>Developerswing_Flatrate::config_developerswing_flatrate</resource>
+			<group id="configuration" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>configuration</label>
+				<field id="enable" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>enable</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="bahrain_message" type="textarea" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>bahrain_message</label>
+					<comment/>
+				</field>
+				<field id="bahrain_price" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Bahrain price</label>
+					<comment/>
+				</field>
+				<field id="kuwait_message" type="textarea" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Kuwait message</label>
+					<comment/>
+				</field>
+				<field id="kuwait_price" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Kuwait price</label>
+					<comment/>
+				</field>
+				<field id="oman_message" type="textarea" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Oman message</label>
+					<comment/>
+				</field>
+				<field id="oman_price" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Oman price</label>
+					<comment/>
+				</field>
+				<field id="saudi_arabia_message" type="textarea" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Saudi Arabia message</label>
+					<comment/>
+				</field>
+				<field id="saudi_arabia_price" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Saudi Arabia price</label>
+					<comment/>
+				</field>
+				<field id="united_arab_emirates_message" type="textarea" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>United Arab Emirates message</label>
+					<comment/>
+				</field>
+				<field id="united_arab_emirates_price" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>United Arab Emirates price</label>
+					<comment/>
+				</field>
+				<field id="condition_for_shipping" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Condition for shipping</label>
+					<comment/>
+				</field>
+				<field id="free_shipping_message" type="text" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Free shipping message</label>
+					<comment/>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>

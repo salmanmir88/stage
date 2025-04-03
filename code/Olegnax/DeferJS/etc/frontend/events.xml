@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<!--
+/**
+ * @author      Olegnax
+ * @package     Olegnax_DeferJS
+ * @copyright   Copyright (c) 2019 Olegnax (http://olegnax.com/). All rights reserved.
+ * See COPYING.txt for license details.
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="controller_front_send_response_before">
+		<observer instance="Olegnax\DeferJS\Observer\Frontend\Controller\FrontSendResponseBefore"
+				  name="olegnax_deferjs_observer_frontend_controller_frontsendresponsebefore_controller_front_send_response_before"/>
+	</event>
+</config>

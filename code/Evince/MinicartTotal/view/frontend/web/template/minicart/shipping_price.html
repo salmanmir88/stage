@@ -1,0 +1,11 @@
+<!-- ko if: (cart().shipping_amount) -->
+<div class="subtotal">
+    <span class="label">
+        <!-- ko i18n: 'Shipping' --><!-- /ko -->
+    </span>
+
+    <!-- ko foreach: elems -->
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <!-- /ko -->
+</div>
+<!-- /ko -->

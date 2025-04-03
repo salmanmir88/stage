@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- Reference the existing block -->
+        <referenceBlock name="order_info">
+            <!-- Add your custom child block -->
+            <block class="Developerswing\OrderTracking\Block\Adminhtml\Order\View\TrackingLink" name="custom_order_header" template="Developerswing_OrderTracking::order/view/custom_info.phtml" after="extra_customer_info"/>
+        </referenceBlock>
+    </body>
+</page>
