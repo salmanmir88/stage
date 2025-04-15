@@ -1,7 +1,45 @@
+<style>
+	@media (max-width: 768px) {
+		#shipping-method-buttons-container,
+		.checkout-payment-method .actions-toolbar {
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			background-color: #fff;
+			z-index: 1000;
+			padding: 15px;
+			box-shadow: 0 -4px 5px rgba(0, 0, 0, 0.1);
+		}
+
+		#shipping-method-buttons-container .primary,
+		.checkout-payment-method .actions-toolbar .primary {
+			width: 100%;
+		}
+
+		#shipping-method-buttons-container .primary .action.continue,
+		.checkout-payment-method .actions-toolbar .primary .action.primary.checkout {
+			width: 100%;
+			font-size: 16px;
+			padding: 15px;
+		}
+
+		/* Prevent the fixed button from overlapping content */
+		.checkout-shipping-method,
+		.checkout-payment-method {
+			padding-bottom: 40px;
+		}
+
+		.methods-shipping .actions-toolbar .action.primary,
+		.checkout-payment-method .payment-method-content>.actions-toolbar>.primary .action.primary {
+			margin: 0 !important;
+		}
+	}
+</style>
 <?php
 $at_settings = $this->helper('Olegnax\Athlete2\Helper\Helper')->getConfig('athlete2_settings/header');
 $header_classes = 'header--layout-' . substr($at_settings['header_layout'], -1);
-if( $at_settings['header_fullwidth'] ) {
+if ($at_settings['header_fullwidth']) {
 	$header_classes .= ' header--full-width';
 }
 ?>
@@ -11,7 +49,7 @@ if( $at_settings['header_fullwidth'] ) {
 			<div class="row">
 				<div class="col header__content-wrapper">
 					<div class="logo__container">
-							<?php echo $this->getChildHtml( "logo" ); ?>
+						<?php echo $this->getChildHtml("logo"); ?>
 					</div>
 					<div class="flex-right flex-row">
 

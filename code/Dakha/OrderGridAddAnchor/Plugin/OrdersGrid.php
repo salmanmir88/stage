@@ -3,19 +3,27 @@
 namespace Dakha\OrderGridAddAnchor\Plugin;
 
 use Magento\Framework\App\RequestInterface;
+use Magento\Framework\App\ResourceConnection;
 
 class OrdersGrid
 {
     protected $request;
-    public function __construct(RequestInterface $request)
-    {
+    protected $resourceConnection;
+
+    public function __construct(
+        RequestInterface $request,
+        ResourceConnection $resourceConnection
+    ) {
         $this->request = $request;
+        $this->resourceConnection = $resourceConnection;
     }
+
     public function afterGetReport($subject, $collection, $requestName)
     {
         $routeName = $this->request->getRouteName();
-        if ($routeName !== 'customer' && $collection->getMainTable() === $collection->getResource()->getTable('sales_order_grid')) {
-            $orderAddressTable  = $collection->getResource()->getTable('sales_order_address');
+
+        if ($routeName !== 'customer' && $collection->getMainTable() === $this->resourceConnection->getTableName('sales_order_grid')) {
+            $orderAddressTable = $this->resourceConnection->getTableName('sales_order_address');
 
             $collection->getSelect()->joinLeft(
                 ['oat' => $orderAddressTable],

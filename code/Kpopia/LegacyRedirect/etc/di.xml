@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.w3.org/2001/XMLSchema-instance http://www.magento.com/schema/di.xsd">
+    <preference for="Magento\Store\Model\Validation\StoreCodeValidator"
+        type="Kpopia\LegacyRedirect\Model\Validation\StoreCodeValidator" />
+</config>

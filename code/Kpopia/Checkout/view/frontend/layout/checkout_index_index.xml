@@ -72,10 +72,17 @@
                                             <item name="children" xsi:type="array">
                                                 <item name="payment" xsi:type="array">
                                                     <item name="children" xsi:type="array">
-                                                        <!--Disable default coupon-->
+                                                        
                                                         <item name="afterMethods" xsi:type="array">
                                                             <item name="children" xsi:type="array">
+                                                                <!--Disable default coupon-->
                                                                 <item name="discount" xsi:type="array">
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="componentDisabled" xsi:type="boolean">true</item>
+                                                                    </item>
+                                                                </item>
+                                                                <!-- Disable default Amasty store credit (optional fallback) -->
+                                                                <item name="storecredit" xsi:type="array">
                                                                     <item name="config" xsi:type="array">
                                                                         <item name="componentDisabled" xsi:type="boolean">true</item>
                                                                     </item>
@@ -94,6 +101,12 @@
                                                                             <item name="displayArea" xsi:type="string">messages</item>
                                                                         </item>
                                                                     </item>
+                                                                    <item name="sortOrder" xsi:type="string">10</item>
+                                                                </item>
+                                                                <!-- Store Credit just after Coupon -->
+                                                                <item name="storecredit" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Kpopia_Checkout/js/view/checkout/payment/store-credit</item>
+                                                                    <item name="sortOrder" xsi:type="string">20</item>
                                                                 </item>
                                                             </item>
                                                         </item>

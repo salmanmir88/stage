@@ -31,15 +31,22 @@ class NoRouteRedirect
         $currentStoreId = $this->storeManager->getStore()->getId();
         $stores = $this->storeManager->getStores();
 
+        // Possible variations of the URL (with and without .html)
+        $requestPathWithHtml = $requestPath . '.html';
+        $requestPathWithoutHtml = preg_replace('/\.html$/', '', $requestPath);
         foreach ($stores as $store) {
             if ($store->getId() != $currentStoreId) {
                 $urlRewriteCollection = $this->urlRewriteCollectionFactory->create()
-                    ->addFieldToFilter('request_path', $requestPath)
-                    ->addFieldToFilter('store_id', $store->getId());
-
+                    ->addFieldToFilter('store_id', $store->getId())
+                    ->addFieldToFilter(
+                        'request_path',
+                        ['in' => [$requestPath, $requestPathWithHtml, $requestPathWithoutHtml]]
+                    );
+                
                 if ($urlRewriteCollection->getSize() > 0) {
+                    $existingUrlRewrite = $urlRewriteCollection->getFirstItem();
                     $storeUrl = $store->getBaseUrl();
-                    $this->response->setRedirect($storeUrl . $requestPath)->sendResponse();
+                    $this->response->setRedirect($storeUrl . $existingUrlRewrite->getRequestPath())->sendResponse();
                     exit;
                 }
             }
